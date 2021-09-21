@@ -16,9 +16,11 @@
 #include <aws/cryptosdk/cipher.h>
 #include <aws/cryptosdk/private/cipher.h>
 
+extern enum aws_cryptosdk_alg_id nondet_alg_id();
+
 void aws_cryptosdk_alg_props_harness() {
     /* Nondet Inputs. */
-    enum aws_cryptosdk_alg_id alg_id;
+    enum aws_cryptosdk_alg_id alg_id = nondet_alg_id();
 
     /* Operation under verification*/
     struct aws_cryptosdk_alg_properties *props = aws_cryptosdk_alg_props(alg_id);

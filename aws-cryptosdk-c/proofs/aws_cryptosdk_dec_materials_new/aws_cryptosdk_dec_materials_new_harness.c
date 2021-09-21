@@ -25,7 +25,7 @@
 
 void aws_cryptosdk_dec_materials_new_harness() {
     struct aws_allocator *alloc = can_fail_allocator();
-    enum aws_cryptosdk_alg_id alg;
+    enum aws_cryptosdk_alg_id alg = nondet_alg_id();
 
     struct aws_cryptosdk_dec_materials *rval = aws_cryptosdk_dec_materials_new(alloc, alg);
     if (rval) {

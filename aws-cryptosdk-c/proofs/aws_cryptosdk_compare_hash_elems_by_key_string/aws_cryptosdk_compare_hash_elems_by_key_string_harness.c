@@ -23,8 +23,8 @@ struct aws_hash_element *nondet_hash_string_element_allocation(size_t max_size) 
     if (elem != NULL) {
         if (nondet_bool()) {
             struct aws_string *key = ensure_string_is_allocated_nondet_length();
-            __CPROVER_assume(aws_string_is_valid(key));
-            __CPROVER_assume(key->len <= max_size);
+            assert(aws_string_is_valid(key));
+            assert(key->len <= max_size);
             elem->key = key;
         } else {
             elem->key = NULL;
@@ -43,8 +43,8 @@ void aws_cryptosdk_compare_hash_elems_by_key_string_harness() {
         nondet_alias_elements ? elem_a : nondet_hash_string_element_allocation(MAX_STRING_LEN);
 
     /* Pre-conditions. */
-    __CPROVER_assume(elem_a != NULL);
-    __CPROVER_assume(elem_b != NULL);
+    assert(elem_a != NULL);
+    assert(elem_b != NULL);
 
     /* Operation under verification. */
     if (aws_cryptosdk_compare_hash_elems_by_key_string(elem_a, elem_b) == AWS_OP_SUCCESS) {

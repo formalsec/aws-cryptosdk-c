@@ -34,7 +34,7 @@ void aws_cryptosdk_cmm_retain_harness() {
     struct aws_cryptosdk_cmm cmm;  // Precondition: non-null
     aws_atomic_store_int(&cmm.refcount, 1);
     cmm.vtable = &vtable;
-    __CPROVER_assume(aws_cryptosdk_cmm_base_is_valid(&cmm));
-    __CPROVER_assume(AWS_ATOMIC_VAR_INTVAL(&cmm.refcount) < SIZE_MAX);
+    assert(aws_cryptosdk_cmm_base_is_valid(&cmm));
+    assert(AWS_ATOMIC_VAR_INTVAL(&cmm.refcount) < SIZE_MAX);
     aws_cryptosdk_cmm_retain(&cmm);
 }

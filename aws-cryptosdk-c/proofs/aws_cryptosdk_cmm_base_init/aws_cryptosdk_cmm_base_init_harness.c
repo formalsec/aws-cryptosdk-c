@@ -29,7 +29,7 @@ void aws_cryptosdk_cmm_base_init_harness() {
 
     /* Assumptions */
     ensure_nondet_allocate_cmm_vtable_members(&vtable, 6);
-    __CPROVER_assume(aws_cryptosdk_cmm_vtable_is_valid(&vtable));
+    assert(aws_cryptosdk_cmm_vtable_is_valid(&vtable));
 
     /* Operation under verification */
     aws_cryptosdk_cmm_base_init(&cmm, &vtable);

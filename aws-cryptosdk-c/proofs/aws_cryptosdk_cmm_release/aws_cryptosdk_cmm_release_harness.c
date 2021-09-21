@@ -31,7 +31,7 @@ void destroy(struct aws_cryptosdk_cmm *cmm) {
 
 void aws_cryptosdk_cmm_release_harness() {
     const struct aws_cryptosdk_cmm_vt vtable = { .vt_size                = sizeof(struct aws_cryptosdk_cmm_vt),
-                                                 .name                   = ensure_c_str_is_allocated(6),
+                                                 .name                   = ensure_c_str_is_allocated(2),
                                                  .destroy                = destroy,
                                                  .generate_enc_materials = nondet_voidp(),
                                                  .decrypt_materials      = nondet_voidp() };
@@ -42,7 +42,7 @@ void aws_cryptosdk_cmm_release_harness() {
     if (cmm) {
         aws_atomic_store_int(&cmm->refcount, 1);
         cmm->vtable = &vtable;
-        __CPROVER_assume(aws_cryptosdk_cmm_base_is_valid(cmm));
+        assert(aws_cryptosdk_cmm_base_is_valid(cmm));
     }
     aws_cryptosdk_cmm_release(cmm);
 }

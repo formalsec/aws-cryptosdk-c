@@ -6,11 +6,12 @@ echo "Patching $TEST"
 sed -i'' -e 's/\<call $__CPROVER_assume\>/sym_assume/' $TEST
 sed -i'' -e 's/\<call $assume\>/sym_assume/' $TEST
 sed -i'' -e 's/\<call $assert\>/sym_assert/' $TEST
-sed -i'' -e 's/call $sym_int/sym_int/' $TEST
-sed -i'' -e 's/call $sym_long/sym_long/' $TEST
-sed -i'' -e 's/call $sym_float/sym_float/' $TEST
-sed -i'' -e 's/call $sym_double/sym_double/' $TEST
+sed -i'' -e 's/call $sym_int/i32.symbolic/' $TEST
+sed -i'' -e 's/call $sym_long/i64.symbolic/' $TEST
+sed -i'' -e 's/call $sym_float/f32.symbolic/' $TEST
+sed -i'' -e 's/call $sym_double/f64.symbolic/' $TEST
 sed -i'' -e 's/call $is_symbolic/is_symbolic/' $TEST
+sed -i'' -e 's/\<call $__logor\>/i32.__logor/' $TEST
 sed -i'' -e 's/\<call $alloc\>/alloc/' $TEST
 sed -i'' -e 's/\<call $free\>/free/' $TEST
 sed -i'' -e 's/\<call $dealloc\>/free/' $TEST

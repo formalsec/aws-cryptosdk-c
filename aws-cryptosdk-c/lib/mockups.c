@@ -1,5 +1,9 @@
 #include "assert.h"
 
+int __logor(int a, int b) {
+  return a || b;
+}
+
 void exit (int e) { assert(1); }
 void __assert_fail(const char *id, const char *file,
     unsigned int i, const char *func) {
@@ -7,7 +11,6 @@ void __assert_fail(const char *id, const char *file,
 }
 int __VERIFIER_nondet_bool(char *name) {
   int sym_var = sym_int(name);
-  assume (sym_var == 0 || sym_var == 1);
   return sym_var;
 }
 char __VERIFIER_nondet_char(char *name) { 
@@ -31,7 +34,6 @@ int __VERIFIER_nondet_int(char *name) { return sym_int(name); }
 
 unsigned int __VERIFIER_nondet_uint(char *name) { 
   unsigned int sym_var = sym_int(name);
-  assume(sym_var >= 0U);
   return sym_var;
 }
 
@@ -41,7 +43,6 @@ int __VERIFIER_nondet_long(char *name) { return sym_long(name); }
 
 unsigned int __VERIFIER_nondet_ulong(char *name) { 
   int sym_var = sym_long(name);
-  assume(sym_var >= 0U);
   return sym_var;
 }
 

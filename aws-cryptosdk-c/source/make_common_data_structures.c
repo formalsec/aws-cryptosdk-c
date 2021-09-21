@@ -54,13 +54,15 @@ bool aws_byte_buf_has_allocator(const struct aws_byte_buf *const buf) {
 }
 
 void ensure_byte_buf_has_allocated_buffer_member(struct aws_byte_buf *buf) {
-    buf->capacity = 16;
-    buf->len = 2;
+    buf->len = NUM_ELEMS;
+    buf->capacity = NUM_ELEMS;
     buf->allocator = can_fail_allocator();
     buf->buffer = malloc(sizeof(uint8_t) * buf->capacity);
+
     for (size_t i = 0; i < buf->len; ++i) {
-      uint8_t c = __VERIFIER_nondet_uchar("buf_char");
-      if (c == '\0') c = c + 1;
+      uint8_t c = __VERIFIER_nondet_uchar("byte");
+      if (c == '\0') 
+        c = c + 1;
       buf->buffer[i] = c;
     }
 }
@@ -121,7 +123,7 @@ bool aws_byte_cursor_is_bounded(const struct aws_byte_cursor *const cursor, cons
 
 void ensure_byte_cursor_has_allocated_buffer_member(struct aws_byte_cursor *cursor) {
     if (cursor) {
-        cursor->len = 16;
+        cursor->len = 4;
         cursor->ptr = bounded_malloc(cursor->len);
         for (size_t i = 0; i < cursor->len; ++i) {
           uint8_t c = __VERIFIER_nondet_uchar("cursor_char");
@@ -371,13 +373,28 @@ void ensure_md_context_has_allocated_members(struct aws_cryptosdk_md_context *ct
     ctx->evp_md_ctx = md_ctx;
 }
 
+enum aws_cryptosdk_alg_id nondet_alg_id() {
+ int alg_id = __VERIFIER_nondet_int("alg_id");
+ assume(__logor((alg_id == 0x0578),
+        __logor((alg_id == 0x0478),
+        __logor((alg_id == 0x0379),
+        __logor((alg_id == 0x0346),
+        __logor((alg_id == 0x0178),
+        __logor((alg_id == 0x0146),
+        __logor((alg_id == 0x0114),
+        __logor((alg_id == 0x0078),
+        __logor((alg_id == 0x0046),
+                (alg_id == 0x0014)))))))))));
+ return (enum aws_cryptosdk_alg_id) alg_id;
+}
+
 struct aws_cryptosdk_sig_ctx *ensure_nondet_sig_ctx_has_allocated_members() {
     struct aws_cryptosdk_sig_ctx *ctx = malloc(sizeof(*ctx));
     if (ctx == NULL) {
         return NULL;
     }
     ctx->alloc = nondet_bool() ? NULL : can_fail_allocator();
-    enum aws_cryptosdk_alg_id alg_id;
+    enum aws_cryptosdk_alg_id alg_id = nondet_alg_id();
     ctx->props   = aws_cryptosdk_alg_props(alg_id);
     ctx->keypair = ec_key_nondet_alloc();
     ctx->pkey    = evp_pkey_nondet_alloc();
