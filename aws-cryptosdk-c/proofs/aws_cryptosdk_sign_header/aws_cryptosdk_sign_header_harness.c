@@ -30,12 +30,12 @@ void aws_cryptosdk_sign_header_harness() {
     /* assumptions*/
     __CPROVER_assume(aws_cryptosdk_alg_properties_is_valid(props));
 
-    __CPROVER_assume(aws_byte_buf_is_bounded(authtag, 2));
     ensure_byte_buf_has_allocated_buffer_member(authtag);
+    __CPROVER_assume(aws_byte_buf_is_bounded(authtag, 2));
     __CPROVER_assume(aws_byte_buf_is_valid(authtag));
 
-    __CPROVER_assume(aws_byte_buf_is_bounded(header, 2));
     ensure_byte_buf_has_allocated_buffer_member(header);
+    __CPROVER_assume(aws_byte_buf_is_bounded(header, 2));
     __CPROVER_assume(aws_byte_buf_is_valid(header));
 
     /* save current state of the data structure */

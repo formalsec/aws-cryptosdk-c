@@ -11,7 +11,7 @@ import threading
 import subprocess
 
 # constants ------------------------------------------------
-THREADS=10
+THREADS=6
 TIMEOUT=900
 INSTR_MAX=4000000000000000000
 ROOT_DIR = '../wasp'

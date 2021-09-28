@@ -63,6 +63,7 @@ bool aws_byte_buf_has_allocator(const struct aws_byte_buf *const buf) {
 
 void ensure_byte_buf_has_allocated_buffer_member(struct aws_byte_buf *buf) {
     buf->len = 1;
+    buf->capacity = NUM_ELEMS;
     buf->allocator = can_fail_allocator();
     buf->buffer = malloc(sizeof(uint8_t) * buf->capacity);
 
