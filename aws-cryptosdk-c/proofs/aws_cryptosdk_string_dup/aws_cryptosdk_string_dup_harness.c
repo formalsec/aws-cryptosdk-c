@@ -30,5 +30,5 @@ void aws_cryptosdk_string_dup_harness() {
 
     struct aws_string *str_b = aws_cryptosdk_string_dup(alloc, str_a);
     /* assertions */
-    aws_string_eq(str_a, str_b);
+    assert(aws_string_eq(str_a, str_b));
 }

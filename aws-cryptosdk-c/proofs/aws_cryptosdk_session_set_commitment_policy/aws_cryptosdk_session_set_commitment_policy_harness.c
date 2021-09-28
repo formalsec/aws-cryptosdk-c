@@ -17,13 +17,19 @@
 #include <aws/cryptosdk/session.h>
 #include <make_common_data_structures.h>
 
+extern int __VERIFIER_nondet_int(char *);
+
 void aws_cryptosdk_session_set_commitment_policy_harness() {
     /* Nondet Input */
     struct aws_cryptosdk_session *session = malloc(sizeof(*session));
-    enum aws_cryptosdk_commitment_policy policy;
+    enum aws_cryptosdk_commitment_policy policy = nondet_commitment_policy();
 
     /* Assumptions */
-    __CPROVER_assume(session != NULL);
+    assume(session != NULL);
+    int state = __VERIFIER_nondet_int("state");
+    assume(state >= 0);
+    assume(state <= 10);
+    session->state = state;
 
     /* Function under test */
     if (aws_cryptosdk_session_set_commitment_policy(session, policy) == AWS_OP_SUCCESS) {

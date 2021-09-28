@@ -26,11 +26,11 @@ void aws_cryptosdk_enc_ctx_clear_harness() {
     struct aws_hash_table map;
 
     ensure_allocated_hash_table(&map, MAX_TABLE_SIZE);
-    __CPROVER_assume(aws_hash_table_is_valid(&map));
+    assert(aws_hash_table_is_valid(&map));
     ensure_hash_table_has_valid_destroy_functions(&map);
 
-    size_t empty_slot_idx = __VERIFIER_nondet_int("empty_slot_idx");
-    __CPROVER_assume(aws_hash_table_has_an_empty_slot(&map, &empty_slot_idx));
+    size_t empty_slot_idx;
+    assert(aws_hash_table_has_an_empty_slot(&map, &empty_slot_idx));
     aws_cryptosdk_enc_ctx_clear(&map);
     assert(aws_hash_table_is_valid(&map));
     struct hash_table_state *impl = map.p_impl;

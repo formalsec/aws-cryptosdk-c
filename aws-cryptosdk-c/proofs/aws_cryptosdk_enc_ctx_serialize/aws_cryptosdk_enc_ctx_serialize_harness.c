@@ -28,11 +28,11 @@ void array_list_item_generator(struct aws_array_list *elems) {
         struct aws_hash_element *val = (struct aws_hash_element *)((uint8_t *)elems->data + (elems->item_size * index));
         // Due to the checks in aws_cryptosdk_enc_ctx_size, no string can have a length > UINT16_MAX
         struct aws_string *key = ensure_string_is_allocated_nondet_length();
-        __CPROVER_assume(aws_string_is_valid(key));
+        assert(aws_string_is_valid(key));
         __CPROVER_assume(key->len <= UINT16_MAX);
         val->key                 = key;
         struct aws_string *value = ensure_string_is_allocated_nondet_length();
-        __CPROVER_assume(aws_string_is_valid(value));
+        assert(aws_string_is_valid(value));
         __CPROVER_assume(value->len <= UINT16_MAX);
         val->value = value;
     }
@@ -45,12 +45,12 @@ void aws_cryptosdk_enc_ctx_serialize_harness() {
 
     /* Assumptions */
     ensure_byte_buf_has_allocated_buffer_member(output);
-    __CPROVER_assume(aws_byte_buf_is_valid(output));
+    assert(aws_byte_buf_is_valid(output));
     ensure_allocated_hash_table(map, MAX_TABLE_SIZE);
-    __CPROVER_assume(aws_hash_table_is_valid(map));
+    assert(aws_hash_table_is_valid(map));
     ensure_hash_table_has_valid_destroy_functions(map);
     size_t empty_slot_idx;
-    __CPROVER_assume(aws_hash_table_has_an_empty_slot(map, &empty_slot_idx));
+    assert(aws_hash_table_has_an_empty_slot(map, &empty_slot_idx));
 
     /* Operation under verification */
     aws_cryptosdk_enc_ctx_serialize(can_fail_allocator(), output, map);

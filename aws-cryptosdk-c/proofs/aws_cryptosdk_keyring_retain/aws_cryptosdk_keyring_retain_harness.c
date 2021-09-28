@@ -19,7 +19,7 @@
 void aws_cryptosdk_keyring_retain_harness() {
     /* Non-deterministic inputs. */
     const struct aws_cryptosdk_keyring_vt vtable = { .vt_size    = sizeof(struct aws_cryptosdk_keyring_vt),
-                                                     .name       = ensure_c_str_is_allocated(16),
+                                                     .name       = ensure_c_str_is_allocated(1),
                                                      .destroy    = nondet_voidp(),
                                                      .on_encrypt = nondet_voidp(),
                                                      .on_decrypt = nondet_voidp() };

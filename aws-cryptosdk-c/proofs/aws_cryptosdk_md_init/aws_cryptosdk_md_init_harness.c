@@ -25,7 +25,7 @@ void aws_cryptosdk_md_init_harness() {
     /* arguments */
     struct aws_allocator *alloc;
     struct aws_cryptosdk_md_context *md_context;
-    enum aws_cryptosdk_md_alg md_alg;
+    enum aws_cryptosdk_md_alg md_alg = AWS_CRYPTOSDK_MD_SHA512;
 
     /* assumptions */
     alloc = can_fail_allocator();

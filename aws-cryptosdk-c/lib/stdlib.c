@@ -6,6 +6,8 @@
 
 #define ABS_LONG_MIN 2147483648UL
 
+extern char __VERIFIER_nondet_char(char *);
+
 void abort(void) { assume(0); }
 
 extern unsigned char __heap_base;
@@ -14,7 +16,7 @@ unsigned int bump_pointer = &__heap_base;
 void *malloc(size_t size) {
   unsigned int r = bump_pointer;
   for (int i = 0; i < size; ++i)
-    *((unsigned char *)bump_pointer + i) = 'i';
+    *((unsigned char *)bump_pointer + i) = __VERIFIER_nondet_char("__hb");
   bump_pointer += size;
   return (void*)alloc(r, size);
 }

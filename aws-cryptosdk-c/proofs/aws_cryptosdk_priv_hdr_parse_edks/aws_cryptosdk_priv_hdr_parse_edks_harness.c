@@ -29,7 +29,7 @@ static bool flag = true;
  */
 uint16_t aws_byte_cursor_read_be16_generator_for_parse_edks(const struct aws_byte_cursor *cursor) {
     (void)cursor;
-    uint16_t rval;
+    uint16_t rval = __VERIFIER_nondet_ushort("rval");
     if (flag) {
         __CPROVER_assume(rval <= MAX_EDK_LIST_ITEMS);
         flag = false;
@@ -60,10 +60,10 @@ void aws_cryptosdk_priv_hdr_parse_edks_harness() {
     struct aws_byte_cursor *pcursor = malloc(sizeof(*pcursor));
 
     /* Assumptions */
-    __CPROVER_assume(pcursor != NULL);
-    __CPROVER_assume(aws_byte_cursor_is_bounded(pcursor, MAX_BUFFER_SIZE));
+    assert(pcursor != NULL);
     ensure_byte_cursor_has_allocated_buffer_member(pcursor);
-    __CPROVER_assume(aws_byte_cursor_is_valid(pcursor));
+    assert(aws_byte_cursor_is_bounded(pcursor, MAX_BUFFER_SIZE));
+    assert(aws_byte_cursor_is_valid(pcursor));
 
     /* Save current state of the data structure */
     struct aws_byte_buf old_iv = hdr->iv;

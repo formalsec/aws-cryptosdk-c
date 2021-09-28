@@ -26,15 +26,15 @@ void aws_cryptosdk_private_derive_key_v1_harness() {
     struct aws_byte_buf *message_id            = malloc(sizeof(*message_id));
 
     /* Assumptions */
-    __CPROVER_assume(aws_cryptosdk_alg_properties_is_valid(props));
+    assume(aws_cryptosdk_alg_properties_is_valid(props));
 
-    __CPROVER_assume(aws_cryptosdk_content_key_is_valid(content_key));
+    assume(aws_cryptosdk_content_key_is_valid(content_key));
 
-    __CPROVER_assume(aws_cryptosdk_data_key_is_valid(data_key));
+    assume(aws_cryptosdk_data_key_is_valid(data_key));
 
-    __CPROVER_assume(IMPLIES(message_id != NULL, aws_byte_buf_is_bounded(message_id, MAX_BUFFER_SIZE)));
     ensure_byte_buf_has_allocated_buffer_member(message_id);
-    __CPROVER_assume(aws_byte_buf_is_valid(message_id));
+    assume(IMPLIES(message_id != NULL, aws_byte_buf_is_bounded(message_id, MAX_BUFFER_SIZE)));
+    assume(aws_byte_buf_is_valid(message_id));
 
     /* Save current state of the data structure */
     struct aws_byte_buf *old_message_id = message_id;

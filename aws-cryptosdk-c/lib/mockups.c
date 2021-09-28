@@ -4,6 +4,10 @@ int __logor(int a, int b) {
   return a || b;
 }
 
+int __logand(int a, int b) {
+  return a && b;
+}
+
 void exit (int e) { assert(1); }
 void __assert_fail(const char *id, const char *file,
     unsigned int i, const char *func) {

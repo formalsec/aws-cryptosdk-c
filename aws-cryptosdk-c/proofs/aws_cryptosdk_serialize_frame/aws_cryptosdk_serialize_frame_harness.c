@@ -18,21 +18,21 @@
 #include <make_common_data_structures.h>
 #include <proof_helpers/make_common_data_structures.h>
 
+extern int __VERIFIER_nondet_int(char *);
+
 void aws_cryptosdk_serialize_frame_harness() {
     /* data structure */
     struct aws_cryptosdk_frame frame;
-    size_t ciphertext_size;
-    size_t plaintext_size;
+    size_t ciphertext_size = __VERIFIER_nondet_int("ciphertext_size");
+    size_t plaintext_size = __VERIFIER_nondet_int("plaintext_size");
     struct aws_byte_buf ciphertext_buf;
     struct aws_cryptosdk_alg_properties *props = ensure_alg_properties_attempt_allocation(MAX_STRING_LEN);
 
     /* Assumptions about the function input */
     ensure_byte_buf_has_allocated_buffer_member(&ciphertext_buf);
-    __CPROVER_assume(aws_byte_buf_is_valid(&ciphertext_buf));
-
-    __CPROVER_assume(aws_cryptosdk_frame_has_valid_type(&frame));
-
-    __CPROVER_assume(aws_cryptosdk_alg_properties_is_valid(props));
+    assume(aws_byte_buf_is_valid(&ciphertext_buf));
+    assume(aws_cryptosdk_frame_has_valid_type(&frame));
+    assume(aws_cryptosdk_alg_properties_is_valid(props));
 
     /* Save the old state of the ciphertext buffer */
     uint8_t *old_ciphertext_buffer   = ciphertext_buf.buffer;

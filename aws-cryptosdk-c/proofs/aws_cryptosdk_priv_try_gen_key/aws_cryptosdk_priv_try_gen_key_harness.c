@@ -46,26 +46,26 @@ void aws_cryptosdk_priv_try_gen_key_harness() {
     struct aws_cryptosdk_session *session = malloc(sizeof(*session));
 
     /* Assumptions */
-    __CPROVER_assume(session != NULL);
+    assert(session != NULL);
 
     /* Set session->cmm */
     const struct aws_cryptosdk_cmm_vt vtable = { .vt_size = sizeof(struct aws_cryptosdk_cmm_vt),
-                                                 .name    = ensure_c_str_is_allocated(SIZE_MAX),
+                                                 .name    = ensure_c_str_is_allocated(1),
                                                  .destroy = nondet_voidp(),
                                                  .generate_enc_materials =
                                                      nondet_bool() ? stub_generate_enc_materials : NULL,
                                                  .decrypt_materials = nondet_voidp() };
-    __CPROVER_assume(aws_cryptosdk_cmm_vtable_is_valid(&vtable));
+    assert(aws_cryptosdk_cmm_vtable_is_valid(&vtable));
 
     struct aws_cryptosdk_cmm *cmm = malloc(sizeof(*cmm));
-    __CPROVER_assume(cmm);
+    assert(cmm);
     cmm->vtable = &vtable;
-    __CPROVER_assume(aws_cryptosdk_cmm_base_is_valid(cmm));
+    assert(aws_cryptosdk_cmm_base_is_valid(cmm));
     session->cmm = cmm;
 
     /* session->alg_props can be NULL or valid */
     session->alg_props = ensure_alg_properties_attempt_allocation(MAX_STRING_LEN);
-    __CPROVER_assume(IMPLIES(session->alg_props != NULL, aws_cryptosdk_alg_properties_is_valid(session->alg_props)));
+    assert(IMPLIES(session->alg_props != NULL, aws_cryptosdk_alg_properties_is_valid(session->alg_props)));
 
     /* Set the session->header */
     struct aws_cryptosdk_hdr *hdr = hdr_setup(MAX_TABLE_SIZE, MAX_EDK_LIST_ITEMS, MAX_BUFFER_SIZE);
@@ -80,34 +80,34 @@ void aws_cryptosdk_priv_try_gen_key_harness() {
 
     /* Set session->keyring_trace */
     struct aws_array_list *keyring_trace = malloc(sizeof(*keyring_trace));
-    __CPROVER_assume(keyring_trace != NULL);
-    __CPROVER_assume(aws_array_list_is_bounded(
-        keyring_trace, MAX_TRACE_LIST_ITEMS, sizeof(struct aws_cryptosdk_keyring_trace_record)));
-    __CPROVER_assume(keyring_trace->item_size == sizeof(struct aws_cryptosdk_keyring_trace_record));
     ensure_array_list_has_allocated_data_member(keyring_trace);
-    __CPROVER_assume(aws_array_list_is_valid(keyring_trace));
     ensure_trace_has_allocated_records(keyring_trace, MAX_STRING_LEN);
-    __CPROVER_assume(aws_cryptosdk_keyring_trace_is_valid(keyring_trace));
+    assert(keyring_trace != NULL);
+    assert(aws_array_list_is_bounded(
+        keyring_trace, MAX_TRACE_LIST_ITEMS, sizeof(struct aws_cryptosdk_keyring_trace_record)));
+    assert(keyring_trace->item_size == sizeof(struct aws_cryptosdk_keyring_trace_record));
+    assert(aws_array_list_is_valid(keyring_trace));
+    assert(aws_cryptosdk_keyring_trace_is_valid(keyring_trace));
     session->keyring_trace = *keyring_trace;
 
     /* Set the allocators */
     session->alloc = can_fail_allocator();
-    __CPROVER_assume(aws_allocator_is_valid(session->alloc));
+    assert(aws_allocator_is_valid(session->alloc));
     /* This assumption is needed for build_header */
     session->header.edk_list.alloc = session->alloc;
 
-    __CPROVER_assume(aws_cryptosdk_commitment_policy_is_valid(session->commitment_policy));
-    __CPROVER_assume(session->state == ST_GEN_KEY);
-    __CPROVER_assume(session->mode == AWS_CRYPTOSDK_ENCRYPT);
+    assert(aws_cryptosdk_commitment_policy_is_valid(session->commitment_policy));
+    assert(session->state == ST_GEN_KEY);
+    assert(session->mode == AWS_CRYPTOSDK_ENCRYPT);
 
     /* session->signctx can be NULL or valid */
     session->signctx = ensure_nondet_sig_ctx_has_allocated_members();
-    __CPROVER_assume(IMPLIES(session->signctx != NULL, aws_cryptosdk_sig_ctx_is_valid(session->signctx)));
+    assert(IMPLIES(session->signctx != NULL, aws_cryptosdk_sig_ctx_is_valid(session->signctx)));
 
     /* session->key_commitment must be valid */
     ensure_byte_buf_has_allocated_buffer_member(&session->key_commitment);
-    __CPROVER_assume(aws_byte_buf_is_bounded(&session->key_commitment, MAX_BUFFER_SIZE));
-    __CPROVER_assume(aws_byte_buf_is_valid(&session->key_commitment));
+    assert(aws_byte_buf_is_bounded(&session->key_commitment, MAX_BUFFER_SIZE));
+    assert(aws_byte_buf_is_valid(&session->key_commitment));
 
     /* Save current state of the data structure */
     struct store_byte_from_buffer old_enc_ctx;

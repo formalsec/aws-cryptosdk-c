@@ -30,13 +30,13 @@ void array_list_item_generator(struct aws_array_list *elems) {
         struct aws_hash_element *val = (struct aws_hash_element *)((uint8_t *)elems->data + (elems->item_size * index));
         /* Due to the checks in aws_cryptosdk_enc_ctx_size, no string can have a length > UINT16_MAX. */
         struct aws_string *key = ensure_string_is_allocated_nondet_length();
-        __CPROVER_assume(aws_string_is_valid(key));
+        assert(aws_string_is_valid(key));
         /* Due to the cast to uint16, the entire size of the enc_ctx must be less than < UINT16_MAX
          * This is a simple way to ensure this without a call to enc_ctx_size. */
         __CPROVER_assume(key->len <= UINT8_MAX);
         val->key                 = key;
         struct aws_string *value = ensure_string_is_allocated_nondet_length();
-        __CPROVER_assume(aws_string_is_valid(value));
+        assert(aws_string_is_valid(value));
         __CPROVER_assume(value->len <= UINT8_MAX);
         val->value = value;
     }
@@ -50,7 +50,7 @@ void aws_cryptosdk_hdr_write_harness() {
     size_t outlen;
 
     /* Assumptions */
-    __CPROVER_assume(IMPLIES(hdr != NULL, aws_byte_buf_is_bounded(&hdr->iv, MAX_IV_LEN)));
+    assert(IMPLIES(hdr != NULL, aws_byte_buf_is_bounded(&hdr->iv, MAX_IV_LEN)));
 
     ASSUME_VALID_MEMORY_COUNT(outbuf, outlen);
     ASSUME_VALID_MEMORY(bytes_written);

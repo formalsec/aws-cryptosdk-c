@@ -31,7 +31,7 @@ void destroy(struct aws_cryptosdk_cmm *cmm) {
 
 void aws_cryptosdk_cmm_release_harness() {
     const struct aws_cryptosdk_cmm_vt vtable = { .vt_size                = sizeof(struct aws_cryptosdk_cmm_vt),
-                                                 .name                   = ensure_c_str_is_allocated(2),
+                                                 .name                   = ensure_c_str_is_allocated(1),
                                                  .destroy                = destroy,
                                                  .generate_enc_materials = nondet_voidp(),
                                                  .decrypt_materials      = nondet_voidp() };

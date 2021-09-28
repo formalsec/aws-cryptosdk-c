@@ -18,11 +18,13 @@
 #include <make_common_data_structures.h>
 #include <proof_helpers/make_common_data_structures.h>
 
+extern int __VERIFIER_nondet_int(char *);
+
 void aws_cryptosdk_deserialize_frame_harness() {
     /* Data structures */
-    enum aws_cryptosdk_alg_id id;
-    size_t ciphertext_size;
-    size_t plaintext_size;
+    enum aws_cryptosdk_alg_id id = nondet_alg_id();
+    size_t ciphertext_size = __VERIFIER_nondet_int("ciphertext_size");
+    size_t plaintext_size = __VERIFIER_nondet_int("plaintext_size");
     struct aws_cryptosdk_alg_properties *alg_props = aws_cryptosdk_alg_props(id);
     struct aws_cryptosdk_frame frame;
     struct aws_byte_cursor ciphertext_buf;
@@ -30,8 +32,8 @@ void aws_cryptosdk_deserialize_frame_harness() {
 
     /* Assumptions about the function inputs */
     ensure_byte_cursor_has_allocated_buffer_member(&ciphertext_buf);
-    __CPROVER_assume(aws_byte_cursor_is_valid(&ciphertext_buf));
-    __CPROVER_assume(aws_cryptosdk_alg_properties_is_valid(alg_props));
+    assert(aws_byte_cursor_is_valid(&ciphertext_buf));
+    assert(aws_cryptosdk_alg_properties_is_valid(alg_props));
 
     /* Save the old state of the ciphertext cursor */
     uint8_t *old_ciphertext_buffer      = ciphertext_buf.ptr;

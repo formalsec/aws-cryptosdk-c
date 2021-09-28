@@ -14,9 +14,9 @@
  */
 
 #include <limits.h>
-
 #include <bn_utils.h>
 #include <ec_utils.h>
+#include <openssl/bn.h>
 #include <openssl/ec.h>
 #include <openssl/objects.h>
 
@@ -51,15 +51,28 @@ struct ECDSA_SIG_st {
 
 /* Helper function for CBMC proofs: check validity of an EC_GROUP. */
 bool ec_group_is_valid(EC_GROUP *group) {
-    return group && (group->curve_name != NID_undef) && (group->asn1_form == POINT_CONVERSION_COMPRESSED) &&
-           bignum_is_valid(group->order);
+    return __logand(group, 
+           __logand((group->curve_name != NID_undef),
+           __logand((group->asn1_form == POINT_CONVERSION_COMPRESSED),
+                     bignum_is_valid(group->order))));
 }
+
 
 /* Helper function for CBMC proofs: allocates an EC_GROUP nondeterministically. */
 EC_GROUP *ec_group_nondet_alloc() {
     EC_GROUP *group = can_fail_malloc(sizeof(EC_GROUP));
 
-    if (group) group->order = bignum_nondet_alloc();
+    if (group) {
+      int curve_name = __VERIFIER_nondet_int("curve_name");
+      assume(curve_name != NID_undef);
+      int point_conversion = __VERIFIER_nondet_int("point_conversion");
+      assume(__logor(point_conversion == 2,
+             __logor(point_conversion == 4, 
+                     point_conversion == 6)));
+      group->curve_name = curve_name;
+      group->asn1_form = point_conversion;
+      group->order = bignum_nondet_alloc();
+    }
 
     return group;
 }

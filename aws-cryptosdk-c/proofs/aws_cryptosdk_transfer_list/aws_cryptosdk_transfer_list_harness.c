@@ -58,18 +58,26 @@ bool stub_array_list_is_valid_deep(const struct aws_array_list *AWS_RESTRICT lis
 void aws_cryptosdk_transfer_list_harness() {
     struct aws_array_list *dest = can_fail_malloc(sizeof(*dest));
     __CPROVER_assume(dest != NULL);
+    dest->length = __VERIFIER_nondet_int("length");
+    dest->item_size = __VERIFIER_nondet_int("item_size");
     __CPROVER_assume(aws_array_list_is_bounded(dest, NUM_ELEMS, ITEM_SIZE));
-    ensure_array_list_has_allocated_data_member(dest);
+    dest->current_size = dest->length * dest->item_size;
+    dest->data = can_fail_malloc(dest->current_size);
+    dest->alloc = can_fail_allocator();
     __CPROVER_assume(stub_array_list_is_valid_deep(dest));
 
     struct aws_array_list *src = can_fail_malloc(sizeof(*src));
     __CPROVER_assume(src != NULL);
+    src->length = __VERIFIER_nondet_int("length");
+    src->item_size = __VERIFIER_nondet_int("item_size");
     __CPROVER_assume(aws_array_list_is_bounded(src, NUM_ELEMS, ITEM_SIZE));
-    ensure_array_list_has_allocated_data_member(src);
+    src->current_size = src->length * src->item_size;
+    src->data = can_fail_malloc(src->current_size);
+    src->alloc = can_fail_allocator();
     __CPROVER_assume(stub_array_list_is_valid_deep(src));
 
+    const struct aws_array_list old_src = *src;
     const struct aws_array_list old_dest = *dest;
-    const struct aws_array_list old_src  = *src;
 
     if (aws_cryptosdk_transfer_list(dest, src) == AWS_OP_SUCCESS) {
         assert(src->length == 0);

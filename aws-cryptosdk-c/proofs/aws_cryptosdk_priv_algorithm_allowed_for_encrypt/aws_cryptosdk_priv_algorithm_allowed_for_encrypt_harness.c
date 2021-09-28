@@ -19,8 +19,8 @@
 
 void aws_cryptosdk_priv_algorithm_allowed_for_encrypt_harness() {
     /* Nondet Input */
-    enum aws_cryptosdk_alg_id alg_id;
-    enum aws_cryptosdk_commitment_policy policy;
+    enum aws_cryptosdk_alg_id alg_id = nondet_alg_id();
+    enum aws_cryptosdk_commitment_policy policy = nondet_commitment_policy();
 
     /* Assumptions */
     assert(aws_cryptosdk_commitment_policy_is_valid(policy));

@@ -27,7 +27,7 @@ void aws_cryptosdk_edk_clean_up_harness() {
 
     struct aws_cryptosdk_edk edk;  // Precondition: non-null
     ensure_cryptosdk_edk_has_allocated_members(&edk);
-    __CPROVER_assume(aws_cryptosdk_edk_is_valid(&edk));  // Precondition: is_valid()
+    assert(aws_cryptosdk_edk_is_valid(&edk));  // Precondition: is_valid()
 
     aws_cryptosdk_edk_clean_up(&edk);
     assert(aws_cryptosdk_edk_is_valid(&edk));

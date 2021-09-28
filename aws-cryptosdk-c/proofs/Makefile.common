@@ -77,7 +77,7 @@ $(BUILD_DIR)/tests/%.bc: %.c
 $(BUILD_DIR)/source/openssl/%.bc: $(SOURCES)/openssl/%.c
 	@mkdir -p $(dir $@)
 	@echo "Building $@..."
-	@$(CC) $(CFLAGS) -o $@ $< > /dev/null 2>&1
+	@$(CC) $(CFLAGS) -o $@ $<
 
 $(BUILD_DIR)/source/openssl/%.o: $(BUILD_DIR)/source/openssl/%.bc
 	@echo "Building $@..."

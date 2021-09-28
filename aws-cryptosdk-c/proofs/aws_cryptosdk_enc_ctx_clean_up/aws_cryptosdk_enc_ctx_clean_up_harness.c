@@ -30,7 +30,7 @@ void aws_cryptosdk_enc_ctx_clean_up_harness() {
     bool impl_is_null;
 
     ensure_allocated_hash_table(&map, MAX_TABLE_SIZE);
-    __CPROVER_assume(aws_hash_table_is_valid(&map));
+    assert(aws_hash_table_is_valid(&map));
     ensure_hash_table_has_valid_destroy_functions(&map);
     map.p_impl->alloc = can_fail_allocator();
 
@@ -38,7 +38,7 @@ void aws_cryptosdk_enc_ctx_clean_up_harness() {
     size_t empty_slot_idx;
     size_t size_in_bytes = sizeof(struct hash_table_state) + sizeof(struct hash_table_entry) * state->size;
 
-    __CPROVER_assume(aws_hash_table_has_an_empty_slot(&map, &empty_slot_idx));
+    assert(aws_hash_table_has_an_empty_slot(&map, &empty_slot_idx));
     if (impl_is_null) {
         map.p_impl = NULL;
     }
@@ -54,7 +54,7 @@ void aws_cryptosdk_enc_ctx_clean_up_harness() {
 #pragma CPROVER check disable "pointer"
     if (map.p_impl != NULL && state->size * sizeof(state->slots[0]) > 0 && &state->slots[0] != NULL) {
         size_t i = __VERIFIER_nondet_int("i");
-        __CPROVER_assume(i < state->size * sizeof(state->slots[0]));
+        assert(i < state->size * sizeof(state->slots[0]));
         assert(((const uint8_t *const)(&state->slots[0]))[i] == 0);
     }
 #pragma CPROVER check pop

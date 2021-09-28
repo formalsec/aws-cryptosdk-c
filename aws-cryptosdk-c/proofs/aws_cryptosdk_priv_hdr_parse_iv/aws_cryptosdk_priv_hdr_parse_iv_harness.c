@@ -24,13 +24,13 @@ void aws_cryptosdk_priv_hdr_parse_iv_harness() {
     /* Nondet Input */
     struct aws_cryptosdk_hdr *hdr   = hdr_setup(MAX_TABLE_SIZE, MAX_EDK_LIST_ITEMS, MAX_BUFFER_SIZE);
     struct aws_byte_cursor *pcursor = malloc(sizeof(*pcursor));
-    uint8_t iv_len;
+    uint8_t iv_len = __VERIFIER_nondet_uchar("iv_len");
 
     /* Assumptions */
-    __CPROVER_assume(pcursor != NULL);
-    __CPROVER_assume(aws_byte_cursor_is_bounded(pcursor, MAX_BUFFER_SIZE));
+    assert(pcursor != NULL);
     ensure_byte_cursor_has_allocated_buffer_member(pcursor);
-    __CPROVER_assume(aws_byte_cursor_is_valid(pcursor));
+    assert(aws_byte_cursor_is_bounded(pcursor, MAX_BUFFER_SIZE));
+    assert(aws_byte_cursor_is_valid(pcursor));
 
     /* Save current state of the data structure */
     struct aws_byte_buf old_auth_tag = hdr->auth_tag;

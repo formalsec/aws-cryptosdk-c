@@ -17,7 +17,7 @@
 
 void aws_cryptosdk_md_size_harness() {
     /* arguments */
-    enum aws_cryptosdk_md_alg md_alg;
+    enum aws_cryptosdk_md_alg md_alg = AWS_CRYPTOSDK_MD_SHA512;
 
     /* operation under verification */
     size_t size = aws_cryptosdk_md_size(md_alg);

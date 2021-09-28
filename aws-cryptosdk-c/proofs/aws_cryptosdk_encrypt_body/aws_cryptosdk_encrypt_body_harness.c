@@ -16,42 +16,49 @@
 #include <aws/cryptosdk/cipher.h>
 #include <make_common_data_structures.h>
 
+extern int __VERIFIER_nondet_int(char *);
+extern char __VERIFIER_nondet_char(char *);
+
 void aws_cryptosdk_encrypt_body_harness() {
     /* Non-deterministic inputs. */
-    enum aws_cryptosdk_alg_id alg_id;
+    enum aws_cryptosdk_alg_id alg_id = nondet_alg_id();
     struct aws_cryptosdk_alg_properties *props = aws_cryptosdk_alg_props(alg_id);
-    __CPROVER_assume(aws_cryptosdk_alg_properties_is_valid(props));
+    assert(aws_cryptosdk_alg_properties_is_valid(props));
 
     struct aws_byte_buf *outp = can_fail_malloc(sizeof(*outp));
-    __CPROVER_assume(outp != NULL);
-    __CPROVER_assume(aws_byte_buf_is_bounded(outp, MAX_BUFFER_SIZE));
+    assert(outp != NULL);
     ensure_byte_buf_has_allocated_buffer_member(outp);
-    __CPROVER_assume(aws_byte_buf_is_valid(outp));
+    assert(aws_byte_buf_is_bounded(outp, MAX_BUFFER_SIZE));
+    assert(aws_byte_buf_is_valid(outp));
 
     struct aws_byte_cursor *inp = can_fail_malloc(sizeof(*inp));
-    __CPROVER_assume(inp != NULL);
-    __CPROVER_assume(aws_byte_cursor_is_bounded(inp, MAX_BUFFER_SIZE));
+    assert(inp != NULL);
     ensure_byte_cursor_has_allocated_buffer_member(inp);
-    __CPROVER_assume(aws_byte_cursor_is_valid(inp));
+    assert(aws_byte_cursor_is_bounded(inp, MAX_BUFFER_SIZE));
+    assert(aws_byte_cursor_is_valid(inp));
 
     struct aws_byte_buf *message_id = can_fail_malloc(sizeof(*message_id));
-    __CPROVER_assume(message_id != NULL);
-    __CPROVER_assume(aws_byte_buf_is_bounded(message_id, MAX_BUFFER_SIZE));
+    assert(message_id != NULL);
     ensure_byte_buf_has_allocated_buffer_member(message_id);
-    __CPROVER_assume(aws_byte_buf_is_valid(message_id));
+    assert(aws_byte_buf_is_bounded(message_id, MAX_BUFFER_SIZE));
+    assert(aws_byte_buf_is_valid(message_id));
 
-    uint32_t seqno;
+    uint32_t seqno = __VERIFIER_nondet_int("seqno");
 
     uint8_t *iv = can_fail_malloc(props->iv_len);
-    __CPROVER_assume(iv != NULL);
+    assert(iv != NULL);
 
     struct content_key *content_key;
+    int i;
+    for (i = 0; i < 32; ++i)
+      content_key->keybuf[i] = __VERIFIER_nondet_char("content_key");
+    content_key->keybuf[i] = '\0';
 
     /* Need to allocate tag_len bytes for writing the tag */
     uint8_t *tag = can_fail_malloc(props->tag_len);
-    __CPROVER_assume(tag != NULL);
+    assert(tag != NULL);
 
-    int body_frame_type;
+    int body_frame_type = __VERIFIER_nondet_int("body_frame_type");
 
     /* save current state of outp */
     struct aws_byte_cursor old_inp = *inp;

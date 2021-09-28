@@ -24,14 +24,14 @@ void aws_cryptosdk_priv_hdr_parse_message_id_harness() {
     /* Nondet Input */
     struct aws_cryptosdk_hdr *hdr   = hdr_setup(MAX_TABLE_SIZE, MAX_EDK_LIST_ITEMS, MAX_BUFFER_SIZE);
     struct aws_byte_cursor *pcursor = malloc(sizeof(*pcursor));
-    enum aws_cryptosdk_alg_id alg_id;
+    enum aws_cryptosdk_alg_id alg_id = nondet_alg_id();
     struct aws_cryptosdk_alg_properties *alg_props = aws_cryptosdk_alg_props(alg_id);
 
     /* Assumptions */
-    __CPROVER_assume(pcursor != NULL);
-    __CPROVER_assume(aws_byte_cursor_is_bounded(pcursor, MAX_BUFFER_SIZE));
+    assert(pcursor != NULL);
     ensure_byte_cursor_has_allocated_buffer_member(pcursor);
-    __CPROVER_assume(aws_byte_cursor_is_valid(pcursor));
+    assert(aws_byte_cursor_is_bounded(pcursor, MAX_BUFFER_SIZE));
+    assert(aws_byte_cursor_is_valid(pcursor));
 
     /* Save current state of the data structure */
     struct aws_byte_buf old_iv = hdr->iv;

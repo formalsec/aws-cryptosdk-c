@@ -21,7 +21,7 @@ void aws_cryptosdk_private_algorithm_message_id_len_harness() {
     struct aws_cryptosdk_alg_properties *props = ensure_alg_properties_attempt_allocation(MAX_STRING_LEN);
 
     /* Assumptions */
-    __CPROVER_assume(aws_cryptosdk_alg_properties_is_valid(props));
+    assert(aws_cryptosdk_alg_properties_is_valid(props));
 
     /* Operation under verification */
     size_t message_id_len = aws_cryptosdk_private_algorithm_message_id_len(props);

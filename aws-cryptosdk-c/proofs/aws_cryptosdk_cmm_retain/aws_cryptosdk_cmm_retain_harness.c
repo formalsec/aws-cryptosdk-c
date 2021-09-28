@@ -25,7 +25,7 @@
 
 void aws_cryptosdk_cmm_retain_harness() {
     const struct aws_cryptosdk_cmm_vt vtable = { .vt_size                = sizeof(struct aws_cryptosdk_cmm_vt),
-                                                 .name                   = ensure_c_str_is_allocated(6),
+                                                 .name                   = ensure_c_str_is_allocated(1),
                                                  .destroy                = nondet_voidp(),
                                                  .generate_enc_materials = nondet_voidp(),
                                                  .decrypt_materials      = nondet_voidp() };

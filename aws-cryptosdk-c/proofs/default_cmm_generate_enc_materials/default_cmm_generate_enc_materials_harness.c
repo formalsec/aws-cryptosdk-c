@@ -31,7 +31,7 @@ int stub_on_encrypt(
 
 void default_cmm_generate_enc_materials_harness() {
     const struct aws_cryptosdk_keyring_vt vtable = { .vt_size    = nondet_size_t(),
-                                                     .name       = ensure_c_str_is_allocated(SIZE_MAX),
+                                                     .name       = ensure_c_str_is_allocated(1),
                                                      .destroy    = nondet_voidp(),
                                                      .on_encrypt = nondet_bool() ? NULL : stub_on_encrypt,
                                                      .on_decrypt = nondet_voidp() };

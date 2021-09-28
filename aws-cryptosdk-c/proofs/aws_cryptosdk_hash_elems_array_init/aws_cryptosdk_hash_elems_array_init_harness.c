@@ -28,13 +28,13 @@
 void aws_cryptosdk_hash_elems_array_init_harness() {
     /* Non-deterministic inputs. */
     struct aws_allocator *alloc = can_fail_allocator();
-    __CPROVER_assume(aws_allocator_is_valid(alloc));
+    assert(aws_allocator_is_valid(alloc));
 
     struct aws_array_list *list = can_fail_malloc(sizeof(*list));
-    __CPROVER_assume(list != NULL);
+    assert(list != NULL);
 
     struct aws_hash_table *map = can_fail_malloc(sizeof(*map));
-    __CPROVER_assume(map != NULL);
+    assert(map != NULL);
 
     assert(!aws_cryptosdk_enc_ctx_init(alloc, map));
     assert(aws_hash_table_is_valid(map));

@@ -26,19 +26,19 @@ void aws_cryptosdk_rsa_encrypt_harness() {
     struct aws_allocator *alloc = can_fail_allocator();
     struct aws_byte_cursor plain;
     struct aws_string *key = ensure_string_is_allocated_nondet_length();
-    enum aws_cryptosdk_rsa_padding_mode rsa_padding_mode;
+    enum aws_cryptosdk_rsa_padding_mode rsa_padding_mode = nondet_rsa_padding_mode();
 
     /* Assumptions */
-    __CPROVER_assume(aws_string_is_valid(key));
-    __CPROVER_assume(key->len <= KEY_LEN);
+    assume(aws_string_is_valid(key));
+    assume(key->len <= KEY_LEN);
 
-    __CPROVER_assume(aws_byte_buf_is_bounded(&cipher, MAX_BUFFER_SIZE));
     ensure_byte_buf_has_allocated_buffer_member(&cipher);
-    __CPROVER_assume(aws_byte_buf_is_valid(&cipher));
+    assume(aws_byte_buf_is_bounded(&cipher, MAX_BUFFER_SIZE));
+    assume(aws_byte_buf_is_valid(&cipher));
 
-    __CPROVER_assume(aws_byte_cursor_is_bounded(&plain, MAX_BUFFER_SIZE));
     ensure_byte_cursor_has_allocated_buffer_member(&plain);
-    __CPROVER_assume(aws_byte_cursor_is_valid(&plain));
+    assume(aws_byte_cursor_is_bounded(&plain, MAX_BUFFER_SIZE));
+    assume(aws_byte_cursor_is_valid(&plain));
 
     /* Save current state of the data structure */
     struct aws_byte_cursor old_plain = plain;

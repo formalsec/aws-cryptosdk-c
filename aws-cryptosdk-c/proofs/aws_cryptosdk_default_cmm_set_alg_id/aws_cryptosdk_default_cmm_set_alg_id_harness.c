@@ -22,23 +22,23 @@
 
 void aws_cryptosdk_default_cmm_set_alg_id_harness() {
     /* Nondet input */
-    enum aws_cryptosdk_alg_id alg_id;
+    enum aws_cryptosdk_alg_id alg_id = nondet_alg_id();
 
     struct aws_cryptosdk_keyring *keyring = malloc(sizeof(*keyring));
 
     const struct aws_cryptosdk_keyring_vt vtable = { .vt_size    = sizeof(struct aws_cryptosdk_keyring_vt),
-                                                     .name       = ensure_c_str_is_allocated(6),
+                                                     .name       = ensure_c_str_is_allocated(1),
                                                      .destroy    = nondet_voidp(),
                                                      .on_encrypt = nondet_voidp(),
                                                      .on_decrypt = nondet_voidp() };
     ensure_cryptosdk_keyring_has_allocated_members(keyring, &vtable);
-    __CPROVER_assume(aws_cryptosdk_keyring_is_valid(keyring));
+    assert(aws_cryptosdk_keyring_is_valid(keyring));
 
     /* Instantiate the default (non-caching) implementation of the Crypto MaterialsManager (CMM) */
     struct aws_cryptosdk_cmm *cmm = aws_cryptosdk_default_cmm_new(can_fail_allocator(), keyring);
 
     /* Assumptions */
-    __CPROVER_assume(cmm != NULL);
+    assert(cmm != NULL);
 
     /* Operation under verification */
     aws_cryptosdk_default_cmm_set_alg_id(cmm, alg_id);

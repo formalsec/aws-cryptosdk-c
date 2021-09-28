@@ -50,7 +50,7 @@ void aws_cryptosdk_enc_ctx_deserialize_harness() {
 
     /* Assumptions */
     ensure_byte_cursor_has_allocated_buffer_member(cursor);
-    __CPROVER_assume(aws_byte_cursor_is_valid(cursor));
+    assert(aws_byte_cursor_is_valid(cursor));
 
     /* the number of elements is stored in big endian format */
     if (cursor->len >= 2) {
@@ -58,9 +58,9 @@ void aws_cryptosdk_enc_ctx_deserialize_harness() {
         cursor->ptr[1] = MAX_NUM_ELEMS;
     }
 
-    ensure_allocated_hash_table(map, SIZE_MAX);
-    make_hash_table_with_no_backing_store(map, SIZE_MAX);
-    __CPROVER_assume(aws_hash_table_is_valid(map));
+    ensure_allocated_hash_table(map, MAX_NUM_ELEMS);
+    make_hash_table_with_no_backing_store(map, MAX_NUM_ELEMS);
+    assert(aws_hash_table_is_valid(map));
 
     /* Function under verification */
     int rval = aws_cryptosdk_enc_ctx_deserialize(can_fail_allocator(), map, cursor);

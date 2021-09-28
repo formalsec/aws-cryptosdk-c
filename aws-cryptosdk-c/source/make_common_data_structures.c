@@ -45,8 +45,16 @@ extern int __VERIFIER_nondet_int(char *);
 #define NUM_ELEMS 2
 #endif
 
+enum aws_cryptosdk_rsa_padding_mode nondet_rsa_padding_mode() {
+  int mode = __VERIFIER_nondet_int("rsa_padding_mode");
+  assume(__logor(mode == AWS_CRYPTOSDK_RSA_PKCS1,
+         __logor(mode == AWS_CRYPTOSDK_RSA_OAEP_SHA1_MGF1,
+                 mode == AWS_CRYPTOSDK_RSA_OAEP_SHA256_MGF1)));
+  return (enum aws_cryptosdk_rsa_padding_mode)mode;
+}
+
 bool aws_byte_buf_is_bounded(const struct aws_byte_buf *const buf, const size_t max_size) {
-    return (buf->capacity <= max_size);
+    return __logand(buf->capacity >= 1, buf->capacity <= max_size);
 }
 
 bool aws_byte_buf_has_allocator(const struct aws_byte_buf *const buf) {
@@ -54,8 +62,7 @@ bool aws_byte_buf_has_allocator(const struct aws_byte_buf *const buf) {
 }
 
 void ensure_byte_buf_has_allocated_buffer_member(struct aws_byte_buf *buf) {
-    buf->len = NUM_ELEMS;
-    buf->capacity = NUM_ELEMS;
+    buf->len = 1;
     buf->allocator = can_fail_allocator();
     buf->buffer = malloc(sizeof(uint8_t) * buf->capacity);
 
@@ -123,7 +130,7 @@ bool aws_byte_cursor_is_bounded(const struct aws_byte_cursor *const cursor, cons
 
 void ensure_byte_cursor_has_allocated_buffer_member(struct aws_byte_cursor *cursor) {
     if (cursor) {
-        cursor->len = 4;
+        cursor->len = 1;
         cursor->ptr = bounded_malloc(cursor->len);
         for (size_t i = 0; i < cursor->len; ++i) {
           uint8_t c = __VERIFIER_nondet_uchar("cursor_char");
@@ -137,9 +144,9 @@ bool aws_array_list_is_bounded(
     const struct aws_array_list *const list,
     const size_t max_initial_item_allocation,
     const size_t max_item_size) {
-    bool item_size_is_bounded = list->item_size <= max_item_size;
-    bool length_is_bounded = list->length <= max_initial_item_allocation;
-    return item_size_is_bounded && length_is_bounded;
+    bool item_size_is_bounded = __logand(list->item_size >= 1, list->item_size <= max_item_size);
+    bool length_is_bounded = __logand(list->length >= 1, list->length <= max_initial_item_allocation);
+    return __logand(item_size_is_bounded, length_is_bounded);
 }
 
 void ensure_array_list_has_allocated_data_member(struct aws_array_list *const list) {
@@ -231,10 +238,14 @@ bool aws_hash_table_has_an_empty_slot(const struct aws_hash_table *const map, si
 }
 
 bool hash_table_state_has_an_empty_slot(const struct hash_table_state *const state, size_t *const rval) {
+    *((int *)&state->entry_count) = __VERIFIER_nondet_int("state->entry_count");
     __CPROVER_assume(state->entry_count > 0);
-    size_t empty_slot_idx;
+    size_t empty_slot_idx = __VERIFIER_nondet_int("empty_slot_idx");
     __CPROVER_assume(empty_slot_idx < state->size);
     *rval = empty_slot_idx;
+    int hash_code = __VERIFIER_nondet_int("empty_slot_idx_hash_code");
+    assume(hash_code == 0);
+    *((int*)&state->slots[empty_slot_idx].hash_code) = hash_code;
     return state->slots[empty_slot_idx].hash_code == 0;
 }
 
@@ -247,7 +258,7 @@ bool hash_table_state_has_an_empty_slot(const struct hash_table_state *const sta
 void hash_proof_destroy_noop(void *p) {}
 
 struct aws_string *ensure_string_is_allocated_nondet_length() {
-    return nondet_allocate_string_bounded_length(16);
+    return nondet_allocate_string_bounded_length(1);
 }
 
 struct aws_string *nondet_allocate_string_bounded_length(size_t max_size) {
@@ -318,6 +329,9 @@ struct aws_cryptosdk_alg_impl *ensure_impl_attempt_allocation(const size_t max_l
     }
     return impl;
 }
+
+enum aws_cryptosdk_alg_id nondet_alg_id();
+
 struct aws_cryptosdk_alg_properties *ensure_alg_properties_attempt_allocation(const size_t max_len) {
     struct aws_cryptosdk_alg_properties *alg_props = malloc(sizeof(struct aws_cryptosdk_alg_properties));
     if (alg_props) {
@@ -326,6 +340,7 @@ struct aws_cryptosdk_alg_properties *ensure_alg_properties_attempt_allocation(co
         alg_props->alg_name    = ensure_c_str_is_allocated(max_len);
         alg_props->sig_md_name = ensure_c_str_is_allocated(max_len);
         alg_props->impl        = ensure_impl_attempt_allocation(max_len);
+        alg_props->alg_id = nondet_alg_id();
     }
     return alg_props;
 }
@@ -343,10 +358,12 @@ struct data_key *ensure_data_key_attempt_allocation() {
 void ensure_record_has_allocated_members(struct aws_cryptosdk_keyring_trace_record *record, size_t max_len) {
     record->wrapping_key_namespace = ensure_string_is_allocated_nondet_length();
     if (record->wrapping_key_namespace) {
+        *((int*)&record->wrapping_key_namespace->len) = __VERIFIER_nondet_int("wrappign_key_namespace->len");
         __CPROVER_assume(record->wrapping_key_namespace->len <= max_len);
     }
     record->wrapping_key_name = ensure_string_is_allocated_nondet_length();
     if (record->wrapping_key_name) {
+        *((int*)&record->wrapping_key_name->len) = __VERIFIER_nondet_int("wrappign_key_name->len");
         __CPROVER_assume(record->wrapping_key_name->len <= max_len);
     }
     record->flags = malloc(sizeof(uint32_t));
@@ -377,7 +394,7 @@ enum aws_cryptosdk_alg_id nondet_alg_id() {
  int alg_id = __VERIFIER_nondet_int("alg_id");
  assume(__logor((alg_id == 0x0578),
         __logor((alg_id == 0x0478),
-        __logor((alg_id == 0x0379),
+        __logor((alg_id == 0x0378),
         __logor((alg_id == 0x0346),
         __logor((alg_id == 0x0178),
         __logor((alg_id == 0x0146),
@@ -386,6 +403,14 @@ enum aws_cryptosdk_alg_id nondet_alg_id() {
         __logor((alg_id == 0x0046),
                 (alg_id == 0x0014)))))))))));
  return (enum aws_cryptosdk_alg_id) alg_id;
+}
+
+enum aws_cryptosdk_commitment_policy nondet_commitment_policy() {
+  unsigned int policy = __VERIFIER_nondet_uint("commitment_policy");
+  assume(__logor((policy == 0x598f396c),
+         __logor((policy == 0x493769b7),
+                 (policy == 0x2735f98a))));
+  return (enum aws_cryptosdk_commitment_policy)policy;
 }
 
 struct aws_cryptosdk_sig_ctx *ensure_nondet_sig_ctx_has_allocated_members() {
@@ -469,6 +494,7 @@ void ensure_cryptosdk_edk_list_has_allocated_list_elements(struct aws_array_list
 void ensure_nondet_hdr_has_allocated_members_ref(struct aws_cryptosdk_hdr *hdr, const size_t max_table_size) {
     if (hdr) {
         hdr->alloc = can_fail_allocator();
+        hdr->alg_id = nondet_alg_id();
         ensure_byte_buf_has_allocated_buffer_member(&hdr->iv);
         ensure_byte_buf_has_allocated_buffer_member(&hdr->auth_tag);
         ensure_byte_buf_has_allocated_buffer_member(&hdr->message_id);
@@ -482,6 +508,7 @@ struct aws_cryptosdk_hdr *ensure_nondet_hdr_has_allocated_members(const size_t m
     struct aws_cryptosdk_hdr *hdr = malloc(sizeof(*hdr));
     if (hdr != NULL) {
         hdr->alloc = can_fail_allocator();
+        hdr->alg_id = nondet_alg_id();
         ensure_byte_buf_has_allocated_buffer_member(&hdr->iv);
         ensure_byte_buf_has_allocated_buffer_member(&hdr->auth_tag);
         ensure_byte_buf_has_allocated_buffer_member(&hdr->message_id);

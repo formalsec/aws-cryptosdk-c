@@ -23,7 +23,7 @@
 void aws_cryptosdk_multi_keyring_add_child_harness() {
     /* Non-deterministic inputs to initialize a multi_keyring object. */
     const struct aws_cryptosdk_keyring_vt vtable_generator = { .vt_size    = sizeof(struct aws_cryptosdk_keyring_vt),
-                                                               .name       = ensure_c_str_is_allocated(6),
+                                                               .name       = ensure_c_str_is_allocated(1),
                                                                .destroy    = nondet_voidp(),
                                                                .on_encrypt = nondet_voidp(),
                                                                .on_decrypt = nondet_voidp() };
@@ -43,7 +43,7 @@ void aws_cryptosdk_multi_keyring_add_child_harness() {
     assert(aws_cryptosdk_multi_keyring_is_valid(multi));
 
     const struct aws_cryptosdk_keyring_vt vtable_child = { .vt_size    = sizeof(struct aws_cryptosdk_keyring_vt),
-                                                           .name       = ensure_c_str_is_allocated(6),
+                                                           .name       = ensure_c_str_is_allocated(1),
                                                            .destroy    = nondet_voidp(),
                                                            .on_encrypt = nondet_voidp(),
                                                            .on_decrypt = nondet_voidp() };

@@ -11,9 +11,9 @@ import threading
 import subprocess
 
 # constants ------------------------------------------------
-THREADS=4
+THREADS=10
 TIMEOUT=900
-INSTR_MAX=4611686018427387803
+INSTR_MAX=4000000000000000000
 ROOT_DIR = '../wasp'
 
 # globals --------------------------------------------------
@@ -61,18 +61,24 @@ def main():
 
     def run_benchmark(test):
         t0    = time.time()
-        out   = run(test)
+        run(test)
         delta = time.time() - t0
         
-        # Oh no! we crashed!!
-        if out is None:
+        out_dir = f'output/{os.path.basename(test)}'
+        if not os.path.exists(out_dir + '/report.json'):
             lock.acquire()
             errors.append(test)
             lock.release()
             logging.info(f'Crashed/Timeout {os.path.basename(test)}')
             return
 
-        report = json.loads(out)
+        with open(f'{out_dir}/report.json', 'r') as f:
+            try:
+                report = json.load(f)
+            except json.decoder.JSONDecodeError:
+                logging.info(f'Thread {i}: Can not read report \'{out_dir}/report.json\'.')
+                return
+
         if not report['specification']:
             lock.acquire()
             errors.append(test)

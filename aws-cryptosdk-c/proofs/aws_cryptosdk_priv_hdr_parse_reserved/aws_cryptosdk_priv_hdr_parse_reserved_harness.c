@@ -26,10 +26,10 @@ void aws_cryptosdk_priv_hdr_parse_reserved_harness() {
     struct aws_byte_cursor *pcursor = malloc(sizeof(*pcursor));
 
     /* Assumptions */
-    __CPROVER_assume(pcursor != NULL);
-    __CPROVER_assume(aws_byte_cursor_is_bounded(pcursor, MAX_BUFFER_SIZE));
+    assert(pcursor != NULL);
     ensure_byte_cursor_has_allocated_buffer_member(pcursor);
-    __CPROVER_assume(aws_byte_cursor_is_valid(pcursor));
+    assert(aws_byte_cursor_is_bounded(pcursor, MAX_BUFFER_SIZE));
+    assert(aws_byte_cursor_is_valid(pcursor));
 
     /* Save current state of the data structure */
     struct aws_byte_buf old_iv = hdr->iv;

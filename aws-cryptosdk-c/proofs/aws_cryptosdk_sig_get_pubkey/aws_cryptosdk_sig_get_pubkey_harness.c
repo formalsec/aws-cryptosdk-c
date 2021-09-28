@@ -29,7 +29,7 @@ void aws_cryptosdk_sig_get_pubkey_harness() {
     struct aws_string *pubkey;
 
     /* assumptions */
-    __CPROVER_assume(aws_cryptosdk_sig_ctx_is_valid_cbmc(ctx));
+    assume(aws_cryptosdk_sig_ctx_is_valid_cbmc(ctx));
 
     /* operation under verification */
     if (aws_cryptosdk_sig_get_pubkey(ctx, alloc, &pubkey) == AWS_OP_SUCCESS) {

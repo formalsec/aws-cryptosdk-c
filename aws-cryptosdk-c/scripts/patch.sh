@@ -12,6 +12,7 @@ sed -i'' -e 's/call $sym_float/f32.symbolic/' $TEST
 sed -i'' -e 's/call $sym_double/f64.symbolic/' $TEST
 sed -i'' -e 's/call $is_symbolic/is_symbolic/' $TEST
 sed -i'' -e 's/\<call $__logor\>/i32.__logor/' $TEST
+sed -i'' -e 's/\<call $__logand\>/i32.__logand/' $TEST
 sed -i'' -e 's/\<call $alloc\>/alloc/' $TEST
 sed -i'' -e 's/\<call $free\>/free/' $TEST
 sed -i'' -e 's/\<call $dealloc\>/free/' $TEST

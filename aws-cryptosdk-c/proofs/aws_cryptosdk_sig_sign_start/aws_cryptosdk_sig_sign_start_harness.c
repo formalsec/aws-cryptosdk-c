@@ -28,7 +28,7 @@ void aws_cryptosdk_sig_sign_start_harness() {
     struct aws_allocator *alloc       = can_fail_allocator();
     struct aws_string *pub_key;
     struct aws_string *priv_key = ensure_string_is_allocated_nondet_length();
-    enum aws_cryptosdk_alg_id alg_id;
+    enum aws_cryptosdk_alg_id alg_id = nondet_alg_id();
     struct aws_cryptosdk_alg_properties *props = aws_cryptosdk_alg_props(alg_id);
 
     /* Assumptions */

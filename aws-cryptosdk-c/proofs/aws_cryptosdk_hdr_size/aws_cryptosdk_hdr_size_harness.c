@@ -23,14 +23,14 @@ void aws_cryptosdk_hdr_size_harness() {
     struct aws_cryptosdk_hdr *hdr = ensure_nondet_hdr_has_allocated_members(MAX_TABLE_SIZE);
 
     /* Assumptions */
-    __CPROVER_assume(aws_cryptosdk_hdr_members_are_bounded(hdr, MAX_EDK_LIST_ITEMS, MAX_BUFFER_SIZE));
+    assert(aws_cryptosdk_hdr_members_are_bounded(hdr, MAX_EDK_LIST_ITEMS, MAX_BUFFER_SIZE));
 
     /* Precondition: The edk list has allocated list elements */
     ensure_cryptosdk_edk_list_has_allocated_list_elements(&hdr->edk_list);
-    __CPROVER_assume(aws_cryptosdk_hdr_is_valid(hdr));
+    assert(aws_cryptosdk_hdr_is_valid(hdr));
 
-    __CPROVER_assume(hdr->enc_ctx.p_impl != NULL);
     ensure_hash_table_has_valid_destroy_functions(&hdr->enc_ctx);
+    assert(hdr->enc_ctx.p_impl != NULL);
     size_t empty_slot_idx;
     __CPROVER_assume(aws_hash_table_has_an_empty_slot(&hdr->enc_ctx, &empty_slot_idx));
 

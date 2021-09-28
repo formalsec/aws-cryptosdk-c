@@ -32,9 +32,9 @@ void hash_iterator_generator2(struct aws_hash_iter *new_iter, const struct aws_h
     (void)old_iter;
     if (new_iter->status == AWS_HASH_ITER_STATUS_READY_FOR_USE) {
         new_iter->element.key = ensure_string_is_allocated_nondet_length();
-        __CPROVER_assume(aws_string_is_valid(new_iter->element.key));
+        assert(aws_string_is_valid(new_iter->element.key));
         new_iter->element.value = ensure_string_is_allocated_nondet_length();
-        __CPROVER_assume(aws_string_is_valid(new_iter->element.value));
+        assert(aws_string_is_valid(new_iter->element.value));
     }
 }
 
@@ -44,13 +44,13 @@ void aws_cryptosdk_enc_ctx_size_harness() {
     size_t *size               = malloc(sizeof(*size));
 
     /* Assumptions */
-    __CPROVER_assume(map != NULL);
+    assert(map != NULL);
     ensure_allocated_hash_table(map, MAX_TABLE_SIZE);
-    __CPROVER_assume(aws_hash_table_is_valid(map));
+    assert(aws_hash_table_is_valid(map));
     ensure_hash_table_has_valid_destroy_functions(map);
     size_t empty_slot_idx;
-    __CPROVER_assume(aws_hash_table_has_an_empty_slot(map, &empty_slot_idx));
-    __CPROVER_assume(size != NULL);
+    assert(aws_hash_table_has_an_empty_slot(map, &empty_slot_idx));
+    assert(size != NULL);
 
     /* Operation under verification */
     int rval = aws_cryptosdk_enc_ctx_size(size, map);
