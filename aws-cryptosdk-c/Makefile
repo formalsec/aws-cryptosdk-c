@@ -14,7 +14,7 @@ all: $(TESTS)
 
 $(BUILD)/tests/%.wat: proofs/%.c
 	@echo "Building $@..."
-	@$(MAKE) -C $(dir $<)
+	@$(MAKE) -C $(dir $<) -j8
 
 clean:
 	$(RM) -rf $(BUILD)

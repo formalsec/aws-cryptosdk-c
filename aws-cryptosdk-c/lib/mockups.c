@@ -19,19 +19,19 @@ int __VERIFIER_nondet_bool(char *name) {
 }
 char __VERIFIER_nondet_char(char *name) { 
   int sym_var = sym_int(name);
-  return sym_var & 0x000000ff;
+  return sym_var;
 }
 unsigned char __VERIFIER_nondet_uchar(char *name) { 
-  int sym_var = sym_int(name);
-  return sym_var & 0x000000ffU;
+  unsigned char sym_var = sym_int(name);
+  return (unsigned char)sym_var;
 }
 short __VERIFIER_nondet_short(char *name) { 
   int sym_var = sym_int(name);
-  return sym_var & 0x0000ffff;
+  return sym_var;
 }
 unsigned short __VERIFIER_nondet_ushort(char *name) { 
   int sym_var = sym_int(name);
-  return sym_var & 0x0000ffffU;
+  return (unsigned short) sym_var;
 }
 
 int __VERIFIER_nondet_int(char *name) { return sym_int(name); }
@@ -43,11 +43,11 @@ unsigned int __VERIFIER_nondet_uint(char *name) {
 
 unsigned int __VERIFIER_nondet_charp(char *name) { return sym_int(name); }
 
-int __VERIFIER_nondet_long(char *name) { return sym_long(name); }
+long __VERIFIER_nondet_long(char *name) { return sym_long(name); }
 
-unsigned int __VERIFIER_nondet_ulong(char *name) { 
+unsigned long __VERIFIER_nondet_ulong(char *name) { 
   int sym_var = sym_long(name);
-  return sym_var;
+  return (unsigned long)sym_var;
 }
 
 float __VERIFIER_nondet_float(char *name) { return sym_float(name); }
