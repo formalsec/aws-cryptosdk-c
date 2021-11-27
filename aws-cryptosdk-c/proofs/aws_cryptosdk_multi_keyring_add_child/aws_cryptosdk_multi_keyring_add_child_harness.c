@@ -20,7 +20,7 @@
 #include <proof_helpers/make_common_data_structures.h>
 #include <proof_helpers/proof_allocators.h>
 
-void aws_cryptosdk_multi_keyring_add_child_harness() {
+int main() {
     /* Non-deterministic inputs to initialize a multi_keyring object. */
     const struct aws_cryptosdk_keyring_vt vtable_generator = { .vt_size    = sizeof(struct aws_cryptosdk_keyring_vt),
                                                                .name       = ensure_c_str_is_allocated(1),
@@ -61,4 +61,5 @@ void aws_cryptosdk_multi_keyring_add_child_harness() {
     /* Post-conditions. */
     assert(aws_cryptosdk_multi_keyring_is_valid(multi));
     assert(aws_cryptosdk_keyring_is_valid(&child));
+    return 0;
 }

@@ -22,7 +22,7 @@
 
 extern int __VERIFIER_nondet_int(char *);
 
-void aws_cryptosdk_enc_ctx_clear_harness() {
+int main() {
     struct aws_hash_table map;
 
     ensure_allocated_hash_table(&map, MAX_TABLE_SIZE);
@@ -35,4 +35,5 @@ void aws_cryptosdk_enc_ctx_clear_harness() {
     assert(aws_hash_table_is_valid(&map));
     struct hash_table_state *impl = map.p_impl;
     assert_all_zeroes(&impl->slots[0], impl->size * sizeof(impl->slots[0]));
+    return 0;
 }

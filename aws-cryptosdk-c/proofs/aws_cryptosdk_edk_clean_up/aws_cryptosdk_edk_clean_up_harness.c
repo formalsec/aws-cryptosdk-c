@@ -22,7 +22,7 @@
 #include <proof_helpers/proof_allocators.h>
 #include <proof_helpers/utils.h>
 
-void aws_cryptosdk_edk_clean_up_harness() {
+int main() {
     struct aws_array_list edk_list;
 
     struct aws_cryptosdk_edk edk;  // Precondition: non-null
@@ -31,4 +31,5 @@ void aws_cryptosdk_edk_clean_up_harness() {
 
     aws_cryptosdk_edk_clean_up(&edk);
     assert(aws_cryptosdk_edk_is_valid(&edk));
+    return 0;
 }

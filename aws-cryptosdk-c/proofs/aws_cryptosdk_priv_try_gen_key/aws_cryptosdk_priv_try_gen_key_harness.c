@@ -41,7 +41,7 @@ int stub_generate_enc_materials(
  * pointer to the function declared above, alg_props can be NULL or valid,
  * etc.) so we do not use the session_setup method to initialize it.
  */
-void aws_cryptosdk_priv_try_gen_key_harness() {
+int main() {
     /* Nondet Input */
     struct aws_cryptosdk_session *session = malloc(sizeof(*session));
 
@@ -119,4 +119,5 @@ void aws_cryptosdk_priv_try_gen_key_harness() {
         assert(aws_cryptosdk_session_is_valid(session));
     }
     check_hash_table_unchanged(&session->header.enc_ctx, &old_enc_ctx);
+    return 0;
 }

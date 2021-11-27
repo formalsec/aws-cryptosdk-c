@@ -17,7 +17,7 @@
 #include <aws/cryptosdk/session.h>
 #include <make_common_data_structures.h>
 
-void aws_cryptosdk_priv_algorithm_allowed_for_decrypt_harness() {
+int main() {
     /* Nondet Input */
     enum aws_cryptosdk_alg_id alg_id = nondet_alg_id();
     enum aws_cryptosdk_commitment_policy policy = nondet_commitment_policy();
@@ -34,4 +34,5 @@ void aws_cryptosdk_priv_algorithm_allowed_for_decrypt_harness() {
 
     /* Assertions */
     assert(aws_cryptosdk_commitment_policy_is_valid(policy));
+    return 0;
 }

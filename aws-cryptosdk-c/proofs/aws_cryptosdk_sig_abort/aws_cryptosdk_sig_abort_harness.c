@@ -23,7 +23,7 @@
 
 #include <cipher_openssl.h>
 
-void aws_cryptosdk_sig_abort_harness() {
+int main() {
     /* arguments */
     struct aws_cryptosdk_sig_ctx *ctx = ensure_nondet_sig_ctx_has_allocated_members();
     assume(aws_cryptosdk_sig_ctx_is_valid_cbmc(ctx));
@@ -56,4 +56,5 @@ void aws_cryptosdk_sig_abort_harness() {
         // clean up (necessary because we are checking for memory leaks)
         ec_key_unconditional_free(keypair);
     }
+    return 0;
 }

@@ -29,7 +29,7 @@ int stub_on_encrypt(
     const struct aws_hash_table *enc_ctx,
     enum aws_cryptosdk_alg_id alg);
 
-void default_cmm_generate_enc_materials_harness() {
+int main() {
     const struct aws_cryptosdk_keyring_vt vtable = { .vt_size    = nondet_size_t(),
                                                      .name       = ensure_c_str_is_allocated(1),
                                                      .destroy    = nondet_voidp(),
@@ -64,4 +64,5 @@ void default_cmm_generate_enc_materials_harness() {
     /* Postconditions */
     assert(aws_cryptosdk_default_cmm_is_valid(cmm));
     assert(aws_cryptosdk_enc_request_is_valid(request));
+    return 0;
 }

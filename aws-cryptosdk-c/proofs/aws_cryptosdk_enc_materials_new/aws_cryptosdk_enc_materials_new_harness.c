@@ -23,7 +23,7 @@
 #include <proof_helpers/proof_allocators.h>
 #include <proof_helpers/utils.h>
 
-void aws_cryptosdk_enc_materials_new_harness() {
+int main() {
     /* Non-deterministic inputs. */
     struct aws_allocator *alloc = can_fail_allocator();
     enum aws_cryptosdk_alg_id alg = nondet_alg_id();
@@ -38,4 +38,5 @@ void aws_cryptosdk_enc_materials_new_harness() {
     if (enc_mat != NULL) {
         assert(aws_cryptosdk_enc_materials_is_valid(enc_mat));
     }
+    return 0;
 }

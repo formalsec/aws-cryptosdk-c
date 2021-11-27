@@ -26,7 +26,7 @@
 #include <proof_helpers/make_common_data_structures.h>
 #include <proof_helpers/utils.h>
 
-void aws_cryptosdk_keyring_trace_add_record_c_str_harness() {
+int main() {
     /* data structure */
     struct aws_allocator *alloc = can_fail_allocator(); /* Precondition: alloc must be non-null */
     struct aws_array_list trace;
@@ -59,4 +59,5 @@ void aws_cryptosdk_keyring_trace_add_record_c_str_harness() {
         /* assertions */
         assert_array_list_equivalence(&trace, &old, &old_byte);
     }
+    return 0;
 }

@@ -22,7 +22,7 @@
 #include <make_common_data_structures.h>
 #include <proof_helpers/make_common_data_structures.h>
 
-void aws_cryptosdk_keyring_trace_clear_harness() {
+int main() {
     /* data structure */
     struct aws_array_list trace;
 
@@ -48,4 +48,5 @@ void aws_cryptosdk_keyring_trace_clear_harness() {
     assert(trace.current_size == old.current_size);
     assert(trace.item_size == old.item_size);
     assert(trace.data == old.data);
+    return 0;
 }

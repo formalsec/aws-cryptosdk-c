@@ -19,7 +19,7 @@
 
 extern int __VERIFIER_nondet_int(char *);
 
-void aws_cryptosdk_genrandom_harness() {
+int main() {
     size_t len = __VERIFIER_nondet_int("len");
     __CPROVER_assume(len < 0xff);
 
@@ -27,4 +27,5 @@ void aws_cryptosdk_genrandom_harness() {
     assert(buf != NULL);
 
     assert(!aws_cryptosdk_genrandom(buf, len));
+    return 0;
 }

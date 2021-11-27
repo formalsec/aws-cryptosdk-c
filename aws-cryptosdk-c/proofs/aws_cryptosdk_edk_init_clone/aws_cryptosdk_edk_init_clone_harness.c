@@ -22,7 +22,7 @@
 #include <proof_helpers/proof_allocators.h>
 #include <proof_helpers/utils.h>
 
-void aws_cryptosdk_edk_init_clone_harness() {
+int main() {
     struct aws_array_list edk_list;
 
     struct aws_allocator *alloc = can_fail_allocator();  // Precondition: valid allocator
@@ -40,4 +40,5 @@ void aws_cryptosdk_edk_init_clone_harness() {
     if (rval == AWS_OP_SUCCESS) {
         assert(aws_cryptosdk_edk_is_valid(&dest));
     }
+    return 0;
 }

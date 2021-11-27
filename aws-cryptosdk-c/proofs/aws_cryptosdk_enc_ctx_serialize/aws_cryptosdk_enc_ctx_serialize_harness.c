@@ -38,7 +38,7 @@ void array_list_item_generator(struct aws_array_list *elems) {
     }
 }
 
-void aws_cryptosdk_enc_ctx_serialize_harness() {
+int main() {
     /* Nondet Input */
     struct aws_byte_buf *output = malloc(sizeof(*output));
     struct aws_hash_table *map  = malloc(sizeof(*map));
@@ -54,4 +54,5 @@ void aws_cryptosdk_enc_ctx_serialize_harness() {
 
     /* Operation under verification */
     aws_cryptosdk_enc_ctx_serialize(can_fail_allocator(), output, map);
+    return 0;
 }

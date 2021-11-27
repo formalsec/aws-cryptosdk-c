@@ -22,7 +22,7 @@
 #include <cipher_openssl.h>
 
 /* Expected runtime 1m20s */
-void aws_cryptosdk_md_finish_harness() {
+int main() {
     /* arguments */
     struct aws_cryptosdk_md_context *md_context = can_fail_malloc(sizeof(struct aws_cryptosdk_md_context));
     size_t length = __VERIFIER_nondet_uchar("length");
@@ -47,4 +47,5 @@ void aws_cryptosdk_md_finish_harness() {
 
     /* clean up (necessary because we are checking for memory leaks) */
     free(buf);
+    return 0;
 }

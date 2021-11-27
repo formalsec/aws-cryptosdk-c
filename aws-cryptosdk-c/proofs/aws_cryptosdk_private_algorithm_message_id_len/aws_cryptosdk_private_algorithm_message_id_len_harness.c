@@ -16,7 +16,7 @@
 #include <aws/cryptosdk/private/cipher.h>
 #include <make_common_data_structures.h>
 
-void aws_cryptosdk_private_algorithm_message_id_len_harness() {
+int main() {
     /* Nondet Input */
     struct aws_cryptosdk_alg_properties *props = ensure_alg_properties_attempt_allocation(MAX_STRING_LEN);
 
@@ -30,4 +30,5 @@ void aws_cryptosdk_private_algorithm_message_id_len_harness() {
     assert(aws_cryptosdk_alg_properties_is_valid(props));
     assert(IMPLIES(props->msg_format_version == AWS_CRYPTOSDK_HEADER_VERSION_1_0, message_id_len == MSG_ID_LEN));
     assert(IMPLIES(props->msg_format_version == AWS_CRYPTOSDK_HEADER_VERSION_2_0, message_id_len == MSG_ID_LEN_V2));
+    return 0;
 }

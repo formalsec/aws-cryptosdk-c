@@ -21,7 +21,7 @@
 #include <cipher_openssl.h>
 
 /* Expected runtime 45s */
-void aws_cryptosdk_md_init_harness() {
+int main() {
     /* arguments */
     struct aws_allocator *alloc;
     struct aws_cryptosdk_md_context *md_context;
@@ -42,4 +42,5 @@ void aws_cryptosdk_md_init_harness() {
         aws_mem_release(alloc, md_context);
     }
     assert(aws_allocator_is_valid(alloc));
+    return 0;
 }

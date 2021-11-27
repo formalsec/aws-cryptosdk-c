@@ -20,7 +20,7 @@
 #include <aws/cryptosdk/materials.h>
 #include <make_common_data_structures.h>
 
-void aws_cryptosdk_default_cmm_set_alg_id_harness() {
+int main() {
     /* Nondet input */
     enum aws_cryptosdk_alg_id alg_id = nondet_alg_id();
 
@@ -45,4 +45,5 @@ void aws_cryptosdk_default_cmm_set_alg_id_harness() {
 
     /* Post-conditions */
     assert(aws_cryptosdk_cmm_base_is_valid(cmm));
+    return 0;
 }

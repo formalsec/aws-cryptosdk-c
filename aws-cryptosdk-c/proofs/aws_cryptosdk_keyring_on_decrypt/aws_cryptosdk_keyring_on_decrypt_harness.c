@@ -73,7 +73,7 @@ int on_decrypt(
     return ret;
 }
 
-void aws_cryptosdk_keyring_on_decrypt_harness() {
+int main() {
     /* Non-deterministic inputs. */
     const struct aws_cryptosdk_keyring_vt vtable = { .vt_size    = sizeof(struct aws_cryptosdk_keyring_vt),
                                                      .name       = ensure_c_str_is_allocated(1),
@@ -138,4 +138,5 @@ void aws_cryptosdk_keyring_on_decrypt_harness() {
     assert(aws_cryptosdk_edk_list_is_valid(&edks));
     assert(aws_cryptosdk_edk_list_elements_are_valid(&edks));
     if (enc_ctx != NULL) assert(aws_hash_table_is_valid(enc_ctx));
+    return 0;
 }

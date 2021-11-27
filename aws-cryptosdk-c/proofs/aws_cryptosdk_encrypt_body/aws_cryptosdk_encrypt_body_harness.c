@@ -19,7 +19,7 @@
 extern int __VERIFIER_nondet_int(char *);
 extern char __VERIFIER_nondet_char(char *);
 
-void aws_cryptosdk_encrypt_body_harness() {
+int main() {
     /* Non-deterministic inputs. */
     enum aws_cryptosdk_alg_id alg_id = nondet_alg_id();
     struct aws_cryptosdk_alg_properties *props = aws_cryptosdk_alg_props(alg_id);
@@ -87,4 +87,5 @@ void aws_cryptosdk_encrypt_body_harness() {
     assert(aws_byte_cursor_is_valid(inp));
     assert(aws_byte_buf_is_valid(message_id));
     assert_byte_buf_equivalence(message_id, &old_message_id, &old_message_id_byte);
+    return 0;
 }

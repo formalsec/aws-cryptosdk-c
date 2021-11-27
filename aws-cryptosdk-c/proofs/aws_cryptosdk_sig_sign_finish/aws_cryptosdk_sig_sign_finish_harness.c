@@ -23,7 +23,7 @@
 
 #include <cipher_openssl.h>
 
-void aws_cryptosdk_sig_sign_finish_harness() {
+int main() {
     /* arguments */
     struct aws_cryptosdk_sig_ctx *ctx = ensure_nondet_sig_ctx_has_allocated_members();
     struct aws_allocator *alloc       = can_fail_allocator();
@@ -53,4 +53,5 @@ void aws_cryptosdk_sig_sign_finish_harness() {
     } else {
         assert(!signature);
     }
+    return 0;
 }

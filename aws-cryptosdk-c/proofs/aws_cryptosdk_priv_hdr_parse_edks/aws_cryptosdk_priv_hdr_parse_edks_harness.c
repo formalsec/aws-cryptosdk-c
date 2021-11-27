@@ -54,7 +54,7 @@ int aws_array_list_push_back(struct aws_array_list *AWS_RESTRICT list, const voi
 }
 #endif
 
-void aws_cryptosdk_priv_hdr_parse_edks_harness() {
+int main() {
     /* Nondet Input */
     struct aws_cryptosdk_hdr *hdr   = hdr_setup(MAX_TABLE_SIZE, MAX_EDK_LIST_ITEMS, MAX_BUFFER_SIZE);
     struct aws_byte_cursor *pcursor = malloc(sizeof(*pcursor));
@@ -94,4 +94,5 @@ void aws_cryptosdk_priv_hdr_parse_edks_harness() {
         assert_byte_buf_equivalence(&hdr->alg_suite_data, &old_alg_suite_data, &old_byte_from_alg_suite_data);
         check_hash_table_unchanged(&hdr->enc_ctx, &old_enc_ctx);
     }
+    return 0;
 }

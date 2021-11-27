@@ -21,7 +21,7 @@ void destroy(struct aws_cryptosdk_keyring *keyring) {
     free(keyring);
 }
 
-void aws_cryptosdk_keyring_release_harness() {
+int main() {
     /* Non-deterministic inputs. */
     const struct aws_cryptosdk_keyring_vt vtable = { .vt_size    = sizeof(struct aws_cryptosdk_keyring_vt),
                                                      .name       = ensure_c_str_is_allocated(1),
@@ -39,4 +39,5 @@ void aws_cryptosdk_keyring_release_harness() {
 
     /* Operation under verification. */
     aws_cryptosdk_keyring_release(keyring);
+    return 0;
 }

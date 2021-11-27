@@ -22,7 +22,7 @@
 #include <proof_helpers/proof_allocators.h>
 #include <proof_helpers/utils.h>
 
-void aws_cryptosdk_edk_eq_harness() {
+int main() {
     const struct aws_cryptosdk_edk a;  // Precondition: non-null
     ensure_cryptosdk_edk_has_allocated_members(&a);
     assert(aws_cryptosdk_edk_is_valid(&a));  // Precondition: is_valid()
@@ -34,4 +34,5 @@ void aws_cryptosdk_edk_eq_harness() {
     bool rval = aws_cryptosdk_edk_eq(&a, &b);
     assert(aws_cryptosdk_edk_is_valid(&a));
     assert(aws_cryptosdk_edk_is_valid(&b));
+    return 0;
 }

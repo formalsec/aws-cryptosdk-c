@@ -25,7 +25,7 @@
 #include <proof_helpers/make_common_data_structures.h>
 #include <proof_helpers/utils.h>
 
-void aws_cryptosdk_hash_elems_array_init_harness() {
+int main() {
     /* Non-deterministic inputs. */
     struct aws_allocator *alloc = can_fail_allocator();
     assert(aws_allocator_is_valid(alloc));
@@ -45,4 +45,5 @@ void aws_cryptosdk_hash_elems_array_init_harness() {
         assert(aws_hash_table_is_valid(map));
         assert(aws_array_list_is_valid(list));
     }
+    return 0;
 }

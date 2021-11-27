@@ -23,7 +23,7 @@
 #include <proof_helpers/proof_allocators.h>
 #include <proof_helpers/utils.h>
 
-void aws_cryptosdk_cmm_retain_harness() {
+int main() {
     const struct aws_cryptosdk_cmm_vt vtable = { .vt_size                = sizeof(struct aws_cryptosdk_cmm_vt),
                                                  .name                   = ensure_c_str_is_allocated(1),
                                                  .destroy                = nondet_voidp(),
@@ -37,4 +37,5 @@ void aws_cryptosdk_cmm_retain_harness() {
     assert(aws_cryptosdk_cmm_base_is_valid(&cmm));
     assert(AWS_ATOMIC_VAR_INTVAL(&cmm.refcount) < SIZE_MAX);
     aws_cryptosdk_cmm_retain(&cmm);
+    return 0;
 }

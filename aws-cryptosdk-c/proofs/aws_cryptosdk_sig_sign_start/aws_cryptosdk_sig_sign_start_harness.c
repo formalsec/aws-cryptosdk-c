@@ -22,7 +22,7 @@
 
 #include <cipher_openssl.h>
 
-void aws_cryptosdk_sig_sign_start_harness() {
+int main() {
     /* Nondet Inputs */
     struct aws_cryptosdk_sig_ctx *ctx = ensure_nondet_sig_ctx_has_allocated_members();
     struct aws_allocator *alloc       = can_fail_allocator();
@@ -49,4 +49,5 @@ void aws_cryptosdk_sig_sign_start_harness() {
     /* Post-conditions */
     if (save_pub_key) assert(!pub_key || aws_string_is_valid(pub_key));
     assert(aws_string_is_valid(priv_key));
+    return 0;
 }

@@ -22,7 +22,7 @@
 
 #include <cipher_openssl.h>
 
-void aws_cryptosdk_sig_get_privkey_harness() {
+int main() {
     /* Nondet Input */
     struct aws_cryptosdk_sig_ctx *ctx = ensure_nondet_sig_ctx_has_allocated_members();
     struct aws_allocator *alloc       = can_fail_allocator();
@@ -42,4 +42,5 @@ void aws_cryptosdk_sig_get_privkey_harness() {
 
     /* Post-conditions */
     assert(aws_cryptosdk_sig_ctx_is_valid_cbmc(ctx));
+    return 0;
 }

@@ -18,7 +18,7 @@
 #include <aws/cryptosdk/private/hkdf.h>
 #include <make_common_data_structures.h>
 
-void aws_cryptosdk_private_derive_key_v2_harness() {
+int main() {
     struct aws_cryptosdk_alg_properties *props = ensure_alg_properties_attempt_allocation(MAX_STRING_LEN);
     struct content_key *content_key            = ensure_content_key_attempt_allocation();
     struct data_key *data_key                  = ensure_data_key_attempt_allocation();
@@ -66,4 +66,5 @@ void aws_cryptosdk_private_derive_key_v2_harness() {
     } else if (rv == AWS_CRYPTOSDK_ERR_UNSUPPORTED_FORMAT) {
         assert(message_id->len != MSG_ID_LEN_V2 || aws_cryptosdk_which_sha(props->alg_id) == AWS_CRYPTOSDK_NOSHA);
     }
+    return 0;
 }

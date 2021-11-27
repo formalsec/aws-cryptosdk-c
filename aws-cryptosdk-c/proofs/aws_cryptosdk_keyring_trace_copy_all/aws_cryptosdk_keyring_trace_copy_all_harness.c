@@ -112,7 +112,7 @@ void aws_cryptosdk_keyring_trace_record_clean_up(void *p) {
 }
 #endif
 
-void aws_cryptosdk_keyring_trace_copy_all_harness() {
+int main() {
     /* Nondet Inputs */
     struct aws_array_list *dest = malloc(sizeof(*dest));
     struct aws_array_list *src  = malloc(sizeof(*src));
@@ -147,4 +147,5 @@ void aws_cryptosdk_keyring_trace_copy_all_harness() {
     /* Post-conditions */
     assert(stub_array_list_is_valid(src));
     assert(stub_array_list_is_valid(dest));
+    return 0;
 }

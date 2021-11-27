@@ -42,7 +42,7 @@ void array_list_item_generator(struct aws_array_list *elems) {
     }
 }
 
-void aws_cryptosdk_hdr_write_harness() {
+int main() {
     /* Nondet Input */
     struct aws_cryptosdk_hdr *hdr = hdr_setup(MAX_TABLE_SIZE, MAX_EDK_LIST_ITEMS, MAX_BUFFER_SIZE);
     size_t *bytes_written;
@@ -85,4 +85,5 @@ void aws_cryptosdk_hdr_write_harness() {
     assert_byte_buf_equivalence(&hdr->message_id, &old_message_id, &old_byte_from_message_id);
     assert_byte_buf_equivalence(&hdr->alg_suite_data, &old_alg_suite_data, &old_byte_from_alg_suite_data);
     check_hash_table_unchanged(&hdr->enc_ctx, &old_enc_ctx);
+    return 0;
 }

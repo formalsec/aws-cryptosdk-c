@@ -20,7 +20,7 @@
 
 extern int __VERIFIER_nondet_int(char *);
 
-void aws_cryptosdk_serialize_frame_harness() {
+int main() {
     /* data structure */
     struct aws_cryptosdk_frame frame;
     size_t ciphertext_size = __VERIFIER_nondet_int("ciphertext_size");
@@ -50,4 +50,5 @@ void aws_cryptosdk_serialize_frame_harness() {
         assert_all_zeroes(ciphertext_buf.buffer, ciphertext_buf.capacity);
         assert(ciphertext_buf.len == 0);
     }
+    return 0;
 }

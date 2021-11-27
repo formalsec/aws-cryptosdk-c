@@ -126,7 +126,7 @@ int aws_array_list_pop_back(struct aws_array_list *AWS_RESTRICT list) {
 }
 #endif
 
-void aws_cryptosdk_edk_list_copy_all_harness() {
+int main() {
     /* Nondet Inputs */
     struct aws_array_list *dest = malloc(sizeof(*dest));
     struct aws_array_list *src  = malloc(sizeof(*src));
@@ -161,4 +161,5 @@ void aws_cryptosdk_edk_list_copy_all_harness() {
     /* Post-conditions */
     assert(aws_array_list_is_valid(src));
     assert(aws_array_list_is_valid(dest));
+    return 0;
 }

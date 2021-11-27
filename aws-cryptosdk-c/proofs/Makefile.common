@@ -6,7 +6,7 @@ OPT_FLAGS=-O1
 LLC=llc
 LLC_FLAGS=-O1 -march=wasm32 -filetype=obj
 LD=wasm-ld
-LD_FLAGS=-error-limit=0 --no-entry --export-all
+LD_FLAGS=-error-limit=0 --no-entry --export=__original_main
 
 # Libc summaries
 ROOT_DIR=../..
@@ -26,7 +26,7 @@ TARGET=$(addprefix $(BUILD_DIR)/test/$(HARNESS_ENTRY)/,$(HARNESS_ENTRY))
 rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
 
 # Necessary sources to compile
-libo  := $(ROOT_DIR)/bin/libc.a
+LIBC := $(ROOT_DIR)/bin/libc.a
 
 opensslc  := $(wildcard $(SOURCES)/openssl/*.c)
 opensslbc := $(addprefix $(BUILD_DIR)/source/openssl/,$(notdir $(opensslc:.c=.bc)))
@@ -60,9 +60,9 @@ $(BUILD_DIR)/tests/%.wat: $(BUILD_DIR)/tests/%.wasm
 	@wasm2wat $< -o $@
 	@./$(ROOT_DIR)/scripts/patch.sh $@
 
-$(BUILD_DIR)/tests/%.wasm: $(BUILD_DIR)/tests/%.o $(libo) $(opensslo) $(commono) $(cryptosdko) $(stubso) $(stubs2o)
+$(BUILD_DIR)/tests/%.wasm: $(BUILD_DIR)/tests/%.o $(opensslo) $(commono) $(cryptosdko) $(stubso) $(stubs2o)
 	@echo "Building $@..."
-	@echo "$(LD) $(LD_FLAGS) $^ -o $@"; $(LD) $(LD_FLAGS) $^ -o $@
+	@echo "$(LD) $(LD_FLAGS) $^ -o $@"; $(LD) $(LD_FLAGS) $(LIBC) $^ -o $@
 
 $(BUILD_DIR)/tests/%.o: $(BUILD_DIR)/tests/%.bc
 	@echo "Building $@..."

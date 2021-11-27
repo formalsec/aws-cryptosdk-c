@@ -23,7 +23,7 @@
 #include <make_common_data_structures.h>
 #include <proof_helpers/make_common_data_structures.h>
 
-void aws_cryptosdk_keyring_trace_eq_harness() {
+int main() {
     /* data structure */
     struct aws_array_list lhs;
     struct aws_array_list rhs;
@@ -70,4 +70,5 @@ void aws_cryptosdk_keyring_trace_eq_harness() {
     assert(aws_array_list_is_valid(&rhs));
     assert_array_list_equivalence(&lhs, &old_lhs, &old_byte_from_lhs);
     assert_array_list_equivalence(&rhs, &old_rhs, &old_byte_from_rhs);
+    return 0;
 }

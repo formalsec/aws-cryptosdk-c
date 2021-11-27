@@ -20,7 +20,7 @@
 
 extern int __VERIFIER_nondet_int(char *);
 
-void aws_cryptosdk_deserialize_frame_harness() {
+int main() {
     /* Data structures */
     enum aws_cryptosdk_alg_id id = nondet_alg_id();
     size_t ciphertext_size = __VERIFIER_nondet_int("ciphertext_size");
@@ -69,4 +69,5 @@ void aws_cryptosdk_deserialize_frame_harness() {
     }
     assert(aws_byte_cursor_is_valid(&ciphertext_buf));
     assert(aws_cryptosdk_alg_properties_is_valid(alg_props));
+    return 0;
 }

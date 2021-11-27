@@ -19,7 +19,7 @@
 
 #include <make_common_data_structures.h>
 
-void aws_cryptosdk_hkdf_harness() {
+int main() {
     /* arguments */
 
     struct aws_byte_buf okm;
@@ -71,4 +71,5 @@ void aws_cryptosdk_hkdf_harness() {
     assert_byte_buf_equivalence(&info, &old_info, &old_byte_from_info);
 
     assert(aws_byte_buf_is_valid(&okm));
+    return 0;
 }

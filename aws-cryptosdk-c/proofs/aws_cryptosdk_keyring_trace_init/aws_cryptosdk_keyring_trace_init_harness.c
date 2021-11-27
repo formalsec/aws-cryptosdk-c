@@ -18,7 +18,7 @@
 #include <make_common_data_structures.h>
 #include <proof_helpers/make_common_data_structures.h>
 
-void aws_cryptosdk_keyring_trace_init_harness() {
+int main() {
     /* data structure */
     struct aws_allocator *alloc = can_fail_allocator(); /* Precondition: alloc must be non-null */
     struct aws_array_list trace;                        /* Precondition: trace must be non-null */
@@ -31,4 +31,5 @@ void aws_cryptosdk_keyring_trace_init_harness() {
     assert(trace.alloc == alloc);
     assert(trace.item_size == sizeof(struct aws_cryptosdk_keyring_trace_record));
     assert(trace.length == 0);
+    return 0;
 }

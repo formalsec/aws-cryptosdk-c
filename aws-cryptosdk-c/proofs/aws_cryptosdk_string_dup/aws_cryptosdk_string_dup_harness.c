@@ -20,7 +20,7 @@
 #include <proof_helpers/make_common_data_structures.h>
 #include <proof_helpers/utils.h>
 
-void aws_cryptosdk_string_dup_harness() {
+int main() {
     /* data structure */
     struct aws_allocator *alloc = can_fail_allocator(); /* Precondition: alloc must be non-null */
     struct aws_string *str_a    = ensure_string_is_allocated_nondet_length();
@@ -31,4 +31,5 @@ void aws_cryptosdk_string_dup_harness() {
     struct aws_string *str_b = aws_cryptosdk_string_dup(alloc, str_a);
     /* assertions */
     assert(aws_string_eq(str_a, str_b));
+    return 0;
 }

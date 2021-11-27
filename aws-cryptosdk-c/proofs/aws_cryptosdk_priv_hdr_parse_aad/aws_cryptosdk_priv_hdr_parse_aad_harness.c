@@ -37,7 +37,7 @@ uint16_t aws_byte_cursor_read_be16_generator_for_parse_aads(const struct aws_byt
     return rval;
 }
 
-void aws_cryptosdk_priv_hdr_parse_aad_harness() {
+int main() {
     /* Nondet Input */
     struct aws_cryptosdk_hdr *hdr   = hdr_setup(MAX_TABLE_SIZE, MAX_EDK_LIST_ITEMS, MAX_BUFFER_SIZE);
     struct aws_byte_cursor *pcursor = malloc(sizeof(*pcursor));
@@ -74,4 +74,5 @@ void aws_cryptosdk_priv_hdr_parse_aad_harness() {
     assert_byte_buf_equivalence(&hdr->auth_tag, &old_auth_tag, &old_byte_from_auth_tag);
     assert_byte_buf_equivalence(&hdr->message_id, &old_message_id, &old_byte_from_message_id);
     assert_byte_buf_equivalence(&hdr->alg_suite_data, &old_alg_suite_data, &old_byte_from_alg_suite_data);
+    return 0;
 }

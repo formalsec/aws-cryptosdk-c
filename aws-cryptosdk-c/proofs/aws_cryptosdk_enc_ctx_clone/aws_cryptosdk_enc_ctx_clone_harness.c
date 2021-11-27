@@ -20,7 +20,7 @@
 #include <proof_helpers/proof_allocators.h>
 #include <proof_helpers/utils.h>
 
-void aws_cryptosdk_enc_ctx_clone_harness() {
+int main() {
     /* Nondet Input */
     struct aws_hash_table *dest = malloc(sizeof(*dest));
     struct aws_hash_table *src  = malloc(sizeof(*src));
@@ -38,4 +38,5 @@ void aws_cryptosdk_enc_ctx_clone_harness() {
 
     /* Operation under verification */
     int rval = aws_cryptosdk_enc_ctx_clone(can_fail_allocator(), dest, src);
+    return 0;
 }

@@ -23,7 +23,7 @@
 
 #include <cipher_openssl.h>
 
-void aws_cryptosdk_sig_update_harness() {
+int main() {
     /* arguments */
     struct aws_cryptosdk_sig_ctx *ctx = ensure_nondet_sig_ctx_has_allocated_members();
     struct aws_byte_cursor buf;
@@ -49,4 +49,5 @@ void aws_cryptosdk_sig_update_harness() {
     evp_pkey_unconditional_free(ctx->pkey);
     evp_md_ctx_shallow_free(ctx->ctx);
     free(ctx);
+    return 0;
 }

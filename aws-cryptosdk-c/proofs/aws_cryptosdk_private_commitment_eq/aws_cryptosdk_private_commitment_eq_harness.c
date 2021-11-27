@@ -17,7 +17,7 @@
 #include <make_common_data_structures.h>
 #include <utils.h>
 
-void aws_cryptosdk_private_commitment_eq_harness() {
+int main() {
     /* Nondet Input */
     struct aws_byte_buf *buf1 = malloc(sizeof(*buf1));
     struct aws_byte_buf *buf2 = malloc(sizeof(*buf2));
@@ -52,4 +52,5 @@ void aws_cryptosdk_private_commitment_eq_harness() {
     assert_byte_buf_equivalence(buf1, old_buf1, &old_byte_from_buf1);
     assert(aws_byte_buf_is_valid(buf2));
     assert_byte_buf_equivalence(buf2, old_buf2, &old_byte_from_buf2);
+    return 0;
 }

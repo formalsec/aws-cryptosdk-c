@@ -16,7 +16,7 @@
 #include <aws/cryptosdk/materials.h>
 #include <make_common_data_structures.h>
 
-void aws_cryptosdk_keyring_retain_harness() {
+int main() {
     /* Non-deterministic inputs. */
     const struct aws_cryptosdk_keyring_vt vtable = { .vt_size    = sizeof(struct aws_cryptosdk_keyring_vt),
                                                      .name       = ensure_c_str_is_allocated(1),
@@ -41,4 +41,5 @@ void aws_cryptosdk_keyring_retain_harness() {
     assert(aws_cryptosdk_keyring_is_valid(&keyring));
     size_t new_refcount = aws_atomic_load_int(&keyring.refcount);
     assert(new_refcount > prev_refcount);
+    return 0;
 }

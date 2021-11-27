@@ -16,7 +16,7 @@
 #include <aws/cryptosdk/materials.h>
 #include <make_common_data_structures.h>
 
-void aws_cryptosdk_keyring_base_init_harness() {
+int main() {
     /* Nondet input. */
     struct aws_cryptosdk_keyring *keyring   = malloc(sizeof(*keyring));
     struct aws_cryptosdk_keyring_vt *vtable = malloc(sizeof(*vtable));
@@ -32,4 +32,5 @@ void aws_cryptosdk_keyring_base_init_harness() {
     /* Post-conditions. */
     assert(aws_cryptosdk_keyring_is_valid(keyring));
     assert(IMPLIES(vtable != NULL, aws_cryptosdk_keyring_vt_is_valid(vtable)));
+    return 0;
 }

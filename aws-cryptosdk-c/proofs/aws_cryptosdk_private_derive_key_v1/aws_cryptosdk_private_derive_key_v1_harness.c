@@ -19,7 +19,7 @@
 #include <make_common_data_structures.h>
 #include <utils.h>
 
-void aws_cryptosdk_private_derive_key_v1_harness() {
+int main() {
     struct aws_cryptosdk_alg_properties *props = ensure_alg_properties_attempt_allocation(MAX_STRING_LEN);
     struct content_key *content_key            = ensure_content_key_attempt_allocation();
     struct data_key *data_key                  = ensure_data_key_attempt_allocation();
@@ -55,4 +55,5 @@ void aws_cryptosdk_private_derive_key_v1_harness() {
     } else if (rv == AWS_OP_SUCCESS && aws_cryptosdk_which_sha(props->alg_id) == AWS_CRYPTOSDK_NOSHA) {
         assert(key_contents_match(content_key, data_key, props->data_key_len));
     }
+    return 0;
 }

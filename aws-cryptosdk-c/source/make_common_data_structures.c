@@ -402,7 +402,8 @@ enum aws_cryptosdk_alg_id nondet_alg_id() {
         __logor((alg_id == 0x0114),
         __logor((alg_id == 0x0078),
         __logor((alg_id == 0x0046),
-                (alg_id == 0x0014)))))))))));
+        __logor((alg_id == 0x0014),
+                (alg_id == 0x0))))))))))));
  return (enum aws_cryptosdk_alg_id) alg_id;
 }
 

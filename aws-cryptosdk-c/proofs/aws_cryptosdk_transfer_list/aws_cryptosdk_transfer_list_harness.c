@@ -55,7 +55,7 @@ bool stub_array_list_is_valid_deep(const struct aws_array_list *AWS_RESTRICT lis
     return required_size_is_valid && current_size_is_valid && data_is_valid && item_size_is_valid;
 }
 
-void aws_cryptosdk_transfer_list_harness() {
+int main() {
     struct aws_array_list *dest = can_fail_malloc(sizeof(*dest));
     __CPROVER_assume(dest != NULL);
     dest->length = __VERIFIER_nondet_int("length");
@@ -85,4 +85,5 @@ void aws_cryptosdk_transfer_list_harness() {
     }
     assert(stub_array_list_is_valid(src));
     assert(stub_array_list_is_valid(dest));
+    return 0;
 }

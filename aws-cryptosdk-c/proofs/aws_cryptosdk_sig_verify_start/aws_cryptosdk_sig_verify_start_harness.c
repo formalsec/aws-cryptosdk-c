@@ -22,7 +22,7 @@
 #include <proof_allocators.h>
 #include <proof_helpers/proof_allocators.h>
 
-void aws_cryptosdk_sig_verify_start_harness() {
+int main() {
     /* Nondet input */
     struct aws_cryptosdk_sig_ctx *ctx;
     struct aws_allocator *alloc = can_fail_allocator();
@@ -42,4 +42,5 @@ void aws_cryptosdk_sig_verify_start_harness() {
 
     /* Post-conditions */
     assert(aws_string_is_valid(pub_key));
+    return 0;
 }

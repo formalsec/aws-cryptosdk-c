@@ -25,7 +25,7 @@ extern int __VERIFIER_nondet_int(char *);
  * Prove the aws_cryptosdk_enc_ctx_clean_up function for the cases
  * where the map both does and does not have an implementation.
  */
-void aws_cryptosdk_enc_ctx_clean_up_harness() {
+int main() {
     struct aws_hash_table map;
     bool impl_is_null;
 
@@ -58,4 +58,5 @@ void aws_cryptosdk_enc_ctx_clean_up_harness() {
         assert(((const uint8_t *const)(&state->slots[0]))[i] == 0);
     }
 #pragma CPROVER check pop
+    return 0;
 }

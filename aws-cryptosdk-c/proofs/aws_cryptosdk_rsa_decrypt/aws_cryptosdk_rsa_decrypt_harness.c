@@ -20,7 +20,7 @@
 
 #define KEY_LEN 256
 
-void aws_cryptosdk_rsa_decrypt_harness() {
+int main() {
     /* Nondet Inputs */
     struct aws_byte_buf plain;
     struct aws_allocator *alloc = can_fail_allocator();
@@ -57,4 +57,5 @@ void aws_cryptosdk_rsa_decrypt_harness() {
     if (cipher.len != 0) {
         assert_byte_from_buffer_matches(cipher.ptr, &old_byte_from_cipher);
     }
+    return 0;
 }

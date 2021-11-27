@@ -19,7 +19,7 @@
 
 #define KEY_LEN 256
 
-void aws_cryptosdk_aes_gcm_decrypt_harness() {
+int main() {
     /* Nondet inputs */
     struct aws_byte_buf plain;
     struct aws_byte_cursor cipher;
@@ -90,4 +90,5 @@ void aws_cryptosdk_aes_gcm_decrypt_harness() {
     if (aad.len != 0) {
         assert_byte_from_buffer_matches(aad.ptr, &old_byte_from_aad);
     }
+    return 0;
 }

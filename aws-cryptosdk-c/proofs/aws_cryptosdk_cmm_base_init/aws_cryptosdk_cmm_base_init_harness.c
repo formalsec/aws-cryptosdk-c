@@ -22,7 +22,7 @@
 #include <proof_helpers/proof_allocators.h>
 #include <proof_helpers/utils.h>
 
-void aws_cryptosdk_cmm_base_init_harness() {
+int main() {
     /* Nondet input */
     struct aws_cryptosdk_cmm cmm;
     const struct aws_cryptosdk_cmm_vt vtable;
@@ -36,4 +36,5 @@ void aws_cryptosdk_cmm_base_init_harness() {
 
     /* Post-conditions */
     assert(aws_cryptosdk_cmm_base_is_valid(&cmm));
+    return 0;
 }

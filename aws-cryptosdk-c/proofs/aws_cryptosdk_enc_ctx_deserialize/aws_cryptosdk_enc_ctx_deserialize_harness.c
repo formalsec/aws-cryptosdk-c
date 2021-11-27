@@ -43,7 +43,7 @@ uint16_t aws_byte_cursor_read_be16_generator_for_enc_ctx_deserialize(const struc
 /**
  * The actual proof
  */
-void aws_cryptosdk_enc_ctx_deserialize_harness() {
+int main() {
     /* Nondet Input */
     struct aws_byte_cursor *cursor = malloc(sizeof(*cursor));
     struct aws_hash_table *map     = malloc(sizeof(*map));
@@ -68,4 +68,5 @@ void aws_cryptosdk_enc_ctx_deserialize_harness() {
     /* Post-conditions */
     assert(aws_hash_table_is_valid(map));
     assert(aws_byte_cursor_is_valid(cursor));
+    return 0;
 }

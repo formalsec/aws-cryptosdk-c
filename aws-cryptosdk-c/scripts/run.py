@@ -11,34 +11,36 @@ import threading
 import subprocess
 
 # constants ------------------------------------------------
-THREADS=10
+THREADS=1
 TIMEOUT=900
 INSTR_MAX=4000000000000000000
 ROOT_DIR = '../wasp'
 
 # globals --------------------------------------------------
 dirs = glob.glob(f'_build/tests')
-table = [['test', 'spec', 'T', 'L', 'S', 'cnt']]
+table = [['test', 'spec', 'T', 'L', 'S', 'cnt', 'Cov']]
 errors = list()
 
 # helpers --------------------------------------------------
-cmd  = lambda p : [
+cmd  = lambda p, r : [
     f'./{ROOT_DIR}/wasp', 
     p, 
     '-e', 
-    f'(invoke \"{os.path.basename(p).replace(".wat", "")}\")',
+    f'(invoke \"__original_main\")',
     '-m', 
-    str(INSTR_MAX)
+    str(INSTR_MAX),
+    '-r',
+    r
 ]
 
-def limit_ram():
+def limit_ram() -> None:
     limit = 15 * 1024 * 1024 * 1024
     resource.setrlimit(resource.RLIMIT_AS, (limit, limit))
 
-def run(test : str):
+def run(test: str, out_dir: str):
     try:
         out = subprocess.check_output(
-            cmd(test), 
+            cmd(test, out_dir), 
             timeout=TIMEOUT,
             stderr=subprocess.STDOUT, 
             preexec_fn=limit_ram
@@ -60,23 +62,25 @@ def main():
     lock = threading.Lock()
 
     def run_benchmark(test):
+        out_dir = os.path.join('output', os.path.basename(test))
         t0    = time.time()
-        run(test)
+        run(test, out_dir)
         delta = time.time() - t0
         
-        out_dir = f'output/{os.path.basename(test)}'
-        if not os.path.exists(out_dir + '/report.json'):
+        report_file = os.path.join(out_dir, 'report.json')
+        if not os.path.exists(report_file):
             lock.acquire()
             errors.append(test)
             lock.release()
             logging.info(f'Crashed/Timeout {os.path.basename(test)}')
             return
 
-        with open(f'{out_dir}/report.json', 'r') as f:
+        
+        with open(report_file, 'r') as f:
             try:
                 report = json.load(f)
             except json.decoder.JSONDecodeError:
-                logging.info(f'Thread {i}: Can not read report \'{out_dir}/report.json\'.')
+                logging.info(f'Thread {i}: Can not read report \'{report_file}\'.')
                 return
 
         if not report['specification']:
@@ -92,11 +96,12 @@ def main():
         lock.acquire()
         table.append([
             f'{test}',
-            report["specification"],
+            report['specification'],
             round(delta, 2),
-            float(report["loop_time"]),
-            float(report["solver_time"]),
-            report["paths_explored"]
+            float(report['loop_time']),
+            float(report['solver_time']),
+            report['paths_explored'],
+            report['coverage']
         ])
         lock.release()
 

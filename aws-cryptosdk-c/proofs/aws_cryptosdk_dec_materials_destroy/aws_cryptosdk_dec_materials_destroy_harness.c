@@ -26,7 +26,7 @@
 #include <proof_helpers/proof_allocators.h>
 #include <proof_helpers/utils.h>
 
-void aws_cryptosdk_dec_materials_destroy_harness() {
+int main() {
     struct aws_cryptosdk_dec_materials *materials = can_fail_malloc(sizeof(*materials));
     if (materials) {
         materials->alloc = can_fail_allocator();
@@ -55,4 +55,5 @@ void aws_cryptosdk_dec_materials_destroy_harness() {
     // Run the function under test.
     // This frees all materials, and hence there are no post-conditions to check
     aws_cryptosdk_dec_materials_destroy(materials);
+    return 0;
 }

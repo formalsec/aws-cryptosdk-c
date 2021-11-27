@@ -18,7 +18,7 @@
 #include <make_common_data_structures.h>
 #include <proof_helpers/make_common_data_structures.h>
 
-void aws_cryptosdk_hdr_size_harness() {
+int main() {
     /* Nondet Input */
     struct aws_cryptosdk_hdr *hdr = ensure_nondet_hdr_has_allocated_members(MAX_TABLE_SIZE);
 
@@ -64,4 +64,5 @@ void aws_cryptosdk_hdr_size_harness() {
     assert_byte_buf_equivalence(&hdr->message_id, &old_message_id, &old_byte_from_message_id);
     assert_byte_buf_equivalence(&hdr->alg_suite_data, &old_alg_suite_data, &old_byte_from_alg_suite_data);
     check_hash_table_unchanged(&hdr->enc_ctx, &old_enc_ctx);
+    return 0;
 }

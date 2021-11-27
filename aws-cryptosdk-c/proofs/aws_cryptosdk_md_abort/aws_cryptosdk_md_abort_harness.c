@@ -21,7 +21,7 @@
 #include <proof_helpers/proof_allocators.h>
 
 /* Expected runtime: 40 seconds */
-void aws_cryptosdk_md_abort_harness() {
+int main() {
     /* arguments */
     struct aws_cryptosdk_md_context *md_context = can_fail_malloc(sizeof(struct aws_cryptosdk_md_context));
 
@@ -35,4 +35,5 @@ void aws_cryptosdk_md_abort_harness() {
     /* operation under verification */
     aws_cryptosdk_md_abort(md_context);
     /* After the abort, the md_context is now invalid. Nothing to assert here */
+    return 0;
 }

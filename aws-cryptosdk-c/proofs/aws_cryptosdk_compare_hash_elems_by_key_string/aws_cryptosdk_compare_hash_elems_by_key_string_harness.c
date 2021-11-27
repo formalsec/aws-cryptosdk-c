@@ -33,7 +33,7 @@ struct aws_hash_element *nondet_hash_string_element_allocation(size_t max_size) 
     return elem;
 }
 
-void aws_cryptosdk_compare_hash_elems_by_key_string_harness() {
+int main() {
     /* Non-deterministic inputs. */
     struct aws_hash_element *elem_a = nondet_hash_string_element_allocation(MAX_STRING_LEN);
 
@@ -60,4 +60,5 @@ void aws_cryptosdk_compare_hash_elems_by_key_string_harness() {
     if (elem_b->key != NULL) {
         assert(aws_string_is_valid(elem_b->key));
     }
+    return 0;
 }

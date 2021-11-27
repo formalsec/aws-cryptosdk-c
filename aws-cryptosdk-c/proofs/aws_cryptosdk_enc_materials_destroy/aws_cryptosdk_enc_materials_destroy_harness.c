@@ -36,7 +36,7 @@ void aws_cryptosdk_edk_list_clean_up(struct aws_array_list *encrypted_data_keys)
 }
 */
 
-void aws_cryptosdk_enc_materials_destroy_harness() {
+int main() {
     struct aws_cryptosdk_enc_materials *materials = can_fail_malloc(sizeof(*materials));
     if (materials) {
         materials->alloc = can_fail_allocator();
@@ -78,4 +78,5 @@ void aws_cryptosdk_enc_materials_destroy_harness() {
     // Run the function under test.
     // This frees all materials, and hence there are no post-conditions to check
     aws_cryptosdk_enc_materials_destroy(materials);
+    return 0;
 }

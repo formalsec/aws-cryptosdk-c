@@ -22,7 +22,7 @@
 #include <proof_helpers/utils.h>
 
 /* Expected runtime 1m30s */
-void aws_cryptosdk_md_update_harness() {
+int main() {
     /* arguments */
     struct aws_cryptosdk_md_context *md_context = can_fail_malloc(sizeof(*md_context));
     size_t length = __VERIFIER_nondet_uchar("length");
@@ -52,4 +52,5 @@ void aws_cryptosdk_md_update_harness() {
     EVP_MD_CTX_free(md_context->evp_md_ctx);
     free(md_context);
     free(buf);
+    return 0;
 }

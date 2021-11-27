@@ -22,7 +22,7 @@
 #include <proof_allocators.h>
 #include <proof_helpers/proof_allocators.h>
 
-void aws_cryptosdk_sig_verify_finish_harness() {
+int main() {
     /* Nondet Input */
     struct aws_cryptosdk_sig_ctx *ctx = ensure_nondet_sig_ctx_has_allocated_members();
     struct aws_string *signature      = ensure_string_is_allocated_nondet_length();
@@ -38,4 +38,5 @@ void aws_cryptosdk_sig_verify_finish_harness() {
 
     /* Operation under verification */
     aws_cryptosdk_sig_verify_finish(ctx, signature);
+    return 0;
 }

@@ -101,7 +101,7 @@ int generate_enc_materials(
     return AWS_OP_SUCCESS;
 }
 
-void aws_cryptosdk_cmm_generate_enc_materials_harness() {
+int main() {
     const struct aws_cryptosdk_cmm_vt vtable = { .vt_size = sizeof(struct aws_cryptosdk_cmm_vt),
                                                  .name    = ensure_c_str_is_allocated(2),
                                                  .destroy = nondet_voidp(),
@@ -134,4 +134,5 @@ void aws_cryptosdk_cmm_generate_enc_materials_harness() {
 
     assert(aws_cryptosdk_cmm_base_is_valid(cmm));
     assert(aws_cryptosdk_enc_request_is_valid(request));
+    return 0;
 }

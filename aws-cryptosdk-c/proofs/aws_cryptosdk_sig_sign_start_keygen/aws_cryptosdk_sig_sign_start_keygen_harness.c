@@ -22,7 +22,7 @@
 
 #include <cipher_openssl.h>
 
-void aws_cryptosdk_sig_sign_start_keygen_harness() {
+int main() {
     /* arguments */
     struct aws_cryptosdk_sig_ctx *pctx;
     struct aws_allocator *alloc = can_fail_allocator();
@@ -43,4 +43,5 @@ void aws_cryptosdk_sig_sign_start_keygen_harness() {
 
     /* assertions */
     if (save_pub_key) assert(!pub_key || aws_string_is_valid(pub_key));
+    return 0;
 }

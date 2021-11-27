@@ -35,7 +35,7 @@ int stub_on_encrypt(
     const struct aws_hash_table *enc_ctx,
     enum aws_cryptosdk_alg_id alg);
 
-void aws_cryptosdk_keyring_on_encrypt_harness() {
+int main() {
     /* Non-deterministic inputs. */
     const struct aws_cryptosdk_keyring_vt vtable = { .vt_size    = sizeof(struct aws_cryptosdk_keyring_vt),
                                                      .name       = ensure_c_str_is_allocated(1),
@@ -100,4 +100,5 @@ void aws_cryptosdk_keyring_on_encrypt_harness() {
     assert(aws_cryptosdk_edk_list_is_valid(&edks));
     assert(aws_cryptosdk_edk_list_elements_are_valid(&edks));
     if (enc_ctx != NULL) assert(aws_hash_table_is_valid(enc_ctx));
+    return 0;
 }

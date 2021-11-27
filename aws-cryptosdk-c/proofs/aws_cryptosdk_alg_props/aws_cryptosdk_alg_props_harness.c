@@ -18,7 +18,7 @@
 
 extern enum aws_cryptosdk_alg_id nondet_alg_id();
 
-void aws_cryptosdk_alg_props_harness() {
+int main() {
     /* Nondet Inputs. */
     enum aws_cryptosdk_alg_id alg_id = nondet_alg_id();
 
@@ -35,4 +35,5 @@ void aws_cryptosdk_alg_props_harness() {
             props->impl->cipher_ctor == NULL || props->impl->cipher_ctor == EVP_aes_128_gcm ||
             props->impl->cipher_ctor == EVP_aes_192_gcm || props->impl->cipher_ctor == EVP_aes_256_gcm);
     }
+    return 0;
 }

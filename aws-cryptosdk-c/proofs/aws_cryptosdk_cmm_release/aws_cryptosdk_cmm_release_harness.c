@@ -29,7 +29,7 @@ void destroy(struct aws_cryptosdk_cmm *cmm) {
     free(cmm);
 }
 
-void aws_cryptosdk_cmm_release_harness() {
+int main() {
     const struct aws_cryptosdk_cmm_vt vtable = { .vt_size                = sizeof(struct aws_cryptosdk_cmm_vt),
                                                  .name                   = ensure_c_str_is_allocated(1),
                                                  .destroy                = destroy,
@@ -45,4 +45,5 @@ void aws_cryptosdk_cmm_release_harness() {
         assert(aws_cryptosdk_cmm_base_is_valid(cmm));
     }
     aws_cryptosdk_cmm_release(cmm);
+    return 0;
 }

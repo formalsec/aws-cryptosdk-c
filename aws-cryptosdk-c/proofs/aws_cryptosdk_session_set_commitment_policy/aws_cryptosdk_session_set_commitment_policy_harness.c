@@ -19,7 +19,7 @@
 
 extern int __VERIFIER_nondet_int(char *);
 
-void aws_cryptosdk_session_set_commitment_policy_harness() {
+int main() {
     /* Nondet Input */
     struct aws_cryptosdk_session *session = malloc(sizeof(*session));
     enum aws_cryptosdk_commitment_policy policy = nondet_commitment_policy();
@@ -43,4 +43,5 @@ void aws_cryptosdk_session_set_commitment_policy_harness() {
 
     /* Assertions */
     assert(session->commitment_policy == policy);
+    return 0;
 }
