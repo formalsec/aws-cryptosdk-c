@@ -1,6 +1,7 @@
 # Helpers
 rwildcard=$(foreach d,$(wildcard $(1:=/*)),$(call rwildcard,$d,$2) $(filter $(subst *,%,$2),$d))
 
+LIBC=bin/libc.a
 BUILD=_build
 PROOFS := $(call rwildcard,proofs,*.c)
 
@@ -17,4 +18,4 @@ $(BUILD)/tests/%.wat: proofs/%.c
 	@$(MAKE) -C $(dir $<) -j8
 
 clean:
-	$(RM) -rf $(BUILD)
+	$(RM) -rf $(BUILD) $(LIBC)
