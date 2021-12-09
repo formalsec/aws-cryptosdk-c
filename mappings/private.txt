@@ -1,0 +1,3 @@
+_build/tests/aws_cryptosdk_private_commitment_eq_harness.wat
+_build/tests/aws_cryptosdk_private_derive_key_v2_harness.wat
+_build/tests/aws_cryptosdk_private_algorithm_message_id_len_harness.wat

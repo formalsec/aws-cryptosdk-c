@@ -1,0 +1,5 @@
+_build/tests/aws_cryptosdk_cmm_release_harness.wat
+_build/tests/aws_cryptosdk_cmm_base_init_harness.wat
+_build/tests/aws_cryptosdk_cmm_decrypt_materials_harness.wat
+_build/tests/aws_cryptosdk_cmm_retain_harness.wat,True
+_build/tests/aws_cryptosdk_cmm_generate_enc_materials_harness.wat

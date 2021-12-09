@@ -14,23 +14,22 @@ import subprocess
 THREADS=1
 TIMEOUT=900
 INSTR_MAX=4000000000000000000
-ROOT_DIR = '../wasp'
 
 # globals --------------------------------------------------
 dirs = glob.glob(f'_build/tests')
-table = [['test', 'spec', 'T', 'L', 'S', 'cnt', 'Cov']]
+table = [['test', 'spec', 'Twasp', 'Tloop', 'Tsolver', 'paths', 'Cov']]
 errors = list()
 
 # helpers --------------------------------------------------
 cmd  = lambda p, r : [
-    f'./{ROOT_DIR}/wasp', 
+    'wasp', 
     p, 
     '-e', 
     f'(invoke \"__original_main\")',
     '-m', 
     str(INSTR_MAX),
-    '-r',
-    r
+    '-r', r,
+    '-b'
 ]
 
 def limit_ram() -> None:
@@ -47,6 +46,7 @@ def run(test: str, out_dir: str):
         )
     except (subprocess.CalledProcessError, \
             subprocess.TimeoutExpired) as e:
+        logging.error('crashed')
         return None
     return out
 #-----------------------------------------------------------
@@ -57,7 +57,7 @@ date_fmt = '%H:%M:%S'
 logging.basicConfig(format=fmt, level=logging.INFO, \
         datefmt=date_fmt)
 
-def main():
+def main(argv):
     tests = []
     lock = threading.Lock()
 
@@ -116,8 +116,11 @@ def main():
                 lock.release()
             run_benchmark(test)
 
-    for dir in dirs:
-        tests = tests + glob.glob(f'{dir}/*.wat')
+    if argv == []:
+        for dir in dirs:
+            tests = tests + glob.glob(f'{dir}/*.wat')
+    else:
+            tests = argv
 
     threads = []
     for i in range(THREADS):
@@ -136,5 +139,5 @@ def main():
         logging.info('Failed Test: ' + err)
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv[1:])
 #-----------------------------------------------------------

@@ -1,0 +1,2 @@
+_build/tests/aws_cryptosdk_md_init_harness.wat
+_build/tests/aws_cryptosdk_md_size_harness.wat

@@ -1,0 +1,7 @@
+_build/tests/aws_cryptosdk_alg_props_harness.wat
+_build/tests/aws_cryptosdk_genrandom_harness.wat
+_build/tests/aws_cryptosdk_session_set_commitment_policy_harness.wat
+_build/tests/aws_cryptosdk_string_dup_harness.wat
+_build/tests/aws_cryptosdk_deserialize_frame_harness.wat
+_build/tests/aws_cryptosdk_serialize_frame_harness.wat
+_build/tests/aws_cryptosdk_sign_header_harness.wat

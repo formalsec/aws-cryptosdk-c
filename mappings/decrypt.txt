@@ -1,0 +1,3 @@
+_build/tests/aws_cryptosdk_decrypt_body_harness.wat
+_build/tests/aws_cryptosdk_priv_algorithm_allowed_for_decrypt_harness.wat
+_build/tests/aws_cryptosdk_aes_gcm_decrypt_harness.wat
