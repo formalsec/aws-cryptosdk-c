@@ -1,12 +1,23 @@
 # Compilation variables
 CC=clang
-CFLAGS=-emit-llvm -g -O0 -ffreestanding --target=wasm32 -c -m32 $(INCLUDE) $(DEFINES)
+CFLAGS=-emit-llvm -g -O0 -ffreestanding --target=wasm32 -c -m32 $(INCLUDE) $(DEFINES) $(WARN)
 OPT=opt
 OPT_FLAGS=-O1
 LLC=llc
 LLC_FLAGS=-O1 -march=wasm32 -filetype=obj
 LD=wasm-ld
 LD_FLAGS=-error-limit=0 --no-entry --export=__original_main
+
+WARN += -Wno-visibility
+WARN += -Wno-return-type
+WARN += -Wno-int-conversion
+WARN += -Wno-constant-conversion
+WARN += -Wno-shift-count-overflow
+WARN += -Wno-implicit-function-declaration
+WARN += -Wno-pointer-bool-conversion
+WARN += -Wno-compare-distinct-pointer-types
+WARN += -Wno-incompatible-pointer-types
+WARN += -Wno-incompatible-pointer-types-discards-qualifiers
 
 # Libc summaries
 ROOT_DIR=../..

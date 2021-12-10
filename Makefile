@@ -11,7 +11,10 @@ TESTS := $(patsubst proofs/%.c,$(BUILD)/tests/%.wat,$(PROOFS))
 
 default: all
 
-all: $(TESTS)
+all: libc $(TESTS)
+
+libc:
+	make -C lib
 
 $(BUILD)/tests/%.wat: proofs/%.c
 	@echo "Building $@..."
