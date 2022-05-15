@@ -26,10 +26,11 @@ cmd  = lambda p, r : [
     p, 
     '-e', 
     f'(invoke \"__original_main\")',
+    '-b',
     '-m', 
     str(INSTR_MAX),
-    '-r', r,
-    '-b'
+    '--workspace', r,
+    '--smt-assume'
 ]
 
 def limit_ram() -> None:

@@ -34,15 +34,15 @@ int main() {
     assert(plain.buffer != NULL);
     assert(aws_byte_buf_is_valid(&plain));
 
-    ensure_byte_cursor_has_allocated_buffer_member(&cipher);
+    ensure_byte_cursor_has_N_allocated_buffer_member(&cipher, 4);
     assert(aws_byte_cursor_is_bounded(&cipher, MAX_BUFFER_SIZE));
     assert(aws_byte_cursor_is_valid(&cipher));
 
-    ensure_byte_cursor_has_allocated_buffer_member(&tag);
+    ensure_byte_cursor_has_N_allocated_buffer_member(&tag, 16);
     assert(aws_byte_cursor_is_bounded(&tag, MAX_BUFFER_SIZE));
     assert(aws_byte_cursor_is_valid(&tag));
 
-    ensure_byte_cursor_has_allocated_buffer_member(&iv);
+    ensure_byte_cursor_has_N_allocated_buffer_member(&iv, 12);
     assert(aws_byte_cursor_is_bounded(&iv, MAX_BUFFER_SIZE));
     assert(aws_byte_cursor_is_valid(&iv));
 
@@ -50,7 +50,7 @@ int main() {
     assert(aws_byte_cursor_is_bounded(&aad, MAX_BUFFER_SIZE));
     assert(aws_byte_cursor_is_valid(&aad));
 
-    key = ensure_string_is_allocated_nondet_length();
+    key = nondet_allocate_string_bounded_length(16);
     assert(key != NULL);
     assert(aws_string_is_valid(key));
 

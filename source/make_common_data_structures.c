@@ -131,7 +131,19 @@ bool aws_byte_cursor_is_bounded(const struct aws_byte_cursor *const cursor, cons
 
 void ensure_byte_cursor_has_allocated_buffer_member(struct aws_byte_cursor *cursor) {
     if (cursor) {
-        cursor->len = 1;
+        cursor->len = 2;
+        cursor->ptr = bounded_malloc(cursor->len);
+        for (size_t i = 0; i < cursor->len; ++i) {
+          uint8_t c = __VERIFIER_nondet_uchar("cursor_char");
+          if (c == '\0') c = c + 1;
+          cursor->ptr[i] = c;
+        }
+    }
+}
+
+void ensure_byte_cursor_has_N_allocated_buffer_member(struct aws_byte_cursor *cursor, int N) {
+    if (cursor) {
+        cursor->len = N;
         cursor->ptr = bounded_malloc(cursor->len);
         for (size_t i = 0; i < cursor->len; ++i) {
           uint8_t c = __VERIFIER_nondet_uchar("cursor_char");

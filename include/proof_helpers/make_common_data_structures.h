@@ -66,6 +66,7 @@ void ensure_byte_buf_has_allocated_buffer_member_in_ring_buf(
  * Ensures aws_byte_cursor has a proper allocated buffer member
  */
 void ensure_byte_cursor_has_allocated_buffer_member(struct aws_byte_cursor *const cursor);
+void ensure_byte_cursor_has_N_allocated_buffer_member(struct aws_byte_cursor *const cursor, int N);
 
 /*
  * Checks whether aws_array_list is bounded by max_initial_item_allocation and max_item_size
